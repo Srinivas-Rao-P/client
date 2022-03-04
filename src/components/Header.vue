@@ -1,8 +1,24 @@
 <template>
   <v-row no-gutters dense>
     <v-col cols="auto" class="ml-auto">
-      <v-btn right depressed :ripple="false" class="no-background-hover">
-        <v-icon color="primary">mdi-bell-ring</v-icon>
+      <v-btn
+        dark
+        right
+        depressed
+        :ripple="false"
+        class="white no-background-hover"
+        @click="changeColorPallet"
+      >
+        <v-icon color="primary" dark dense>mdi-circle</v-icon>
+      </v-btn>
+      <v-btn
+        dark
+        right
+        depressed
+        :ripple="false"
+        class="white no-background-hover"
+      >
+        <v-icon color="primary" dark dense>mdi-bell-ring</v-icon>
       </v-btn>
 
       <v-menu
@@ -18,11 +34,13 @@
             small
             depressed
             :ripple="false"
-            class="no-background-hover"
+            class="white no-background-hover"
             v-bind="attrs"
             v-on="on"
           >
-            <v-icon color="primary" large>mdi-account-circle</v-icon>
+            <v-icon dark color="primary" class="mx-2"
+              >mdi-account-circle</v-icon
+            >
             <span v-if="username" class="username">{{ username }}</span>
             <span v-else class="username">No name</span>
           </v-btn>
@@ -56,7 +74,14 @@ export default {
   components: {
     Logout,
   },
-  created: () => {
+  created() {},
+  methods: {
+    changeColorPallet() {
+      this.$vuetify.theme.isDark = !this.$vuetify.theme.isDark;
+      // window.theme = this.$vuetify.theme.isDark
+      //   ? this.$vuetify.theme.themes.dark
+      //   : this.$vuetify.theme.themes.light;
+    },
   },
 };
 </script>

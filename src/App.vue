@@ -1,17 +1,32 @@
 <template>
-  <v-app>
-    <v-navigation-drawer
-      class="navigation-drawer"
+  <v-app dark>
+    <v-app-bar
+      elevation="1"
       app
-      permanent
-      v-if="showMenuHeader && !isMobile"
+      dense
+      fixed
+      flat
+      v-if="showMenuHeader"
+      color="white"
+      clipped-left
     >
-      <Menu />
-    </v-navigation-drawer>
-
-    <v-app-bar app dense fixed flat v-if="showMenuHeader">
+      <v-app-bar-nav-icon
+        class="d-lg-none"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
       <Header />
     </v-app-bar>
+
+    <v-navigation-drawer
+      app
+      v-model="drawer"
+      class="navigation-drawer"
+      :mini-variant="miniVariant"
+      clipped
+      v-if="showMenuHeader"
+    >
+      <Menu @collapse="miniVariant = !miniVariant" />
+    </v-navigation-drawer>
 
     <v-main id="main" class="honeydew">
       <v-container fluid :class="showMenuHeader ? '' : 'fill-height'">
@@ -33,11 +48,17 @@ import Header from "@/components/Header";
 export default {
   name: "App",
   data() {
-    return { dialog: true };
+    return {
+      drawer: false,
+      miniVariant: false,
+    };
   },
   components: {
     Menu,
     Header,
+  },
+  created() {
+    this.drawer = !this.isMobile;
   },
   computed: {
     activeSession() {
@@ -46,8 +67,9 @@ export default {
     isMobile() {
       if (window.innerWidth < 720) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     },
     showMenuHeader() {
       if (
@@ -69,6 +91,9 @@ export default {
 </script>
 
 <style>
+/* *{  
+  text-transform: capitalize;
+} */
 /* Hide scrollbar for Chrome, Safari and Opera */
 .v-navigation-drawer__content::-webkit-scrollbar {
   display: none;
@@ -91,8 +116,9 @@ export default {
   transition: all 0.3s ease-out;
 }
 a:hover,
-a.active {
-  color: indianred !important;
+a.active,
+b {
+  color: #195f73 !important;
 }
 a.active {
   font-weight: bold;

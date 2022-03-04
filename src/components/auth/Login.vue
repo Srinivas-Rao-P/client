@@ -38,7 +38,7 @@
               >Login
             </v-btn>
 
-            <v-btn
+            <!-- <v-btn
               text
               :to="{ name: 'register' }"
               style="float: right"
@@ -46,7 +46,7 @@
               :ripple="false"
               class="no-background-hover"
               >Dont have a account
-            </v-btn>
+            </v-btn> -->
           </v-col>
         </v-row>
       </v-form>
@@ -60,7 +60,7 @@ export default {
   name: "login",
   data() {
     return {
-      username: "admin",
+      username: "hr",
       password: "xyz",
       rules: {
         nameRules: (v) => !!v || "Username/Email is required",
@@ -83,7 +83,7 @@ export default {
               localStorage.setItem("refreshToken", response.data.refreshToken);
               this.$router.push({ name: "home" });
             } else {
-              console.log("token not found");
+              this.$toast.error("Token not found");
             }
           })
           .catch((error) => {

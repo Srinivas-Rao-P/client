@@ -1,6 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
-
+import router from "@/router/index"
+import { logout } from "@/services/login/loginService";
 // import router from "../../router";
 // import VueJwtDecode from "vue-jwt-decode";
 // import vueCookies from "vue-cookies";
@@ -73,10 +74,21 @@ ResourcesServer.interceptors.response.use(
         if (error.response.status) {
             switch (error.response.status) {
                 case 400:
-                    vm.$toast.error("Data Entry Error");                    
+                    vm.$toast.error("Data Entry Error");
                     break;
                 case 401:
                     vm.$toast.error("Session expired!");
+                    logout(window.refreshToken)
+                        .then((response) => {
+                            if (response.data) {
+                                localStorage.removeItem("token");
+                                localStorage.removeItem("refreshToken");
+                                router.go();
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
                     break;
                 case 403:
                     vm.$toast.error("Access denied!");
@@ -99,15 +111,19 @@ ResourcesServer.interceptors.response.use(
 );
 
 ResourcesServer.interceptors.request.use(function (config) {
+    if (window.token) {
+        config.headers["Authorization"] = "Bearer " + window.token;
+        config.headers["Access-Control-Allow-Origin"] = "*";
+        config.headers["Content-Type"] = "application/json";
+        config.headers["accept"] = "application/json";
+        config.headers["applicationType"] = "web";
+        config.headers["Accept-Language"] = "en";
+        return config;
+    } else {
+        console.log("error: token not found");
+    }
 
-    config.headers["Authorization"] = "Bearer " + window.token;
-    config.headers["Access-Control-Allow-Origin"] = "*";
-    config.headers["Content-Type"] = "application/json";
-    config.headers["accept"] = "application/json";
-    config.headers["applicationType"] = "web";
-    config.headers["Accept-Language"] = "en";
 
-    return config;
 });
 
 export default ResourcesServer;

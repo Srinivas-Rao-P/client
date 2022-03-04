@@ -41,6 +41,9 @@ const options = {
 }
 
 Vue.use(Toast, options);
+Vue.config.productionTip = false
+Vue.use(VueI18n);
+const vm = new Vue();
 
 const decodeToken = (token) => {
   let decoded = VueJwtDecode.decode(token)
@@ -58,9 +61,7 @@ const decodeToken = (token) => {
 //   token: () => window.token,
 // }
 
-Vue.config.productionTip = false
-Vue.use(VueI18n);
-const vm = new Vue();
+
 // Vue.use(VueAuthHref, options);
 
 export const i18n = new VueI18n({
@@ -73,9 +74,10 @@ router.beforeEach((to, from, next) => {
   // window.token = Vue.$cookies.get("accessToken")
 
   window.token = localStorage.getItem('token')
-  window.refreshToken = localStorage.getItem(' refreshToken')
-  if (!window.token || window.token == null) {
-    vm.$toast.error("Token not found");
+  window.refreshToken = localStorage.getItem('refreshToken')
+  if (window.token == null) {
+    console.log("Token not found");
+    delete window.name; 
   } else if (Date.now() >= (VueJwtDecode.decode(window.token).exp) * 1000) {
     vm.$toast.error("Session expired!");
   } else {

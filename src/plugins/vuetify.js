@@ -6,21 +6,23 @@ import colors from 'vuetify/lib/util/colors'
 Vue.use(Vuetify)
 
 export default new Vuetify({
-
+    dark: false,
     theme: {
-        dark: false,
         themes: {
             light: {
-                primary: "#01627F",
-                // primary: colors.indigo,
+                // primary: "#01627F",
+                primary: "#195F73",
                 secondary: colors.grey.darken1,
                 accent: colors.shades.black,
-                error: colors.red.accent3,
-                honeydew: colors.lightBlue.lighten5,
-            },
-            dark: {
-                primary: colors.red,
-            },
+                error: "e6a08c",
+                // honeydew: "#DBF5F0",
+                // honeydew: "#f8fcff",
+                honeydew: "#F5F7FB",
+                // honeydew: "#e6f5fa",
+
+                // honeydew:"#F5F7FB",
+                // honeydew:"#FAFAFA",
+            }
         },
     },
 })

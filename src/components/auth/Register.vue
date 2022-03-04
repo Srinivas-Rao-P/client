@@ -111,7 +111,7 @@ export default {
                       localStorage.setItem("refreshToken", window.refreshToken);
                       this.$router.push({ name: "home" });
                     } else {
-                      console.log("token not found");
+                      this.$toast.error("Token not found");
                     }
                   })
                   .catch((error) => {

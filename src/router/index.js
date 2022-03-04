@@ -8,6 +8,9 @@ const routes = [
         path: "/login",
         name: "login",
         component: () => import("@/components/auth/Login"),
+        meta: {
+            requiresVisitor: true,
+        }
         
     },
     {
@@ -37,8 +40,8 @@ const routes = [
         }
     },
     {
-        path: "/profile",
-        name: "profile",
+        path: "/profile/:personId?",
+        name: "profileindex",
         props: true,
         component: () => import("@/views/profile/index"),
         meta: {
@@ -57,6 +60,75 @@ const routes = [
         path: "/mypay",
         name: "mypay",
         component: () => import("@/components/Mypay"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/manageemployee",
+        name: "manageemployee",
+        props: true,
+        component: () => import("@/views/manageemployee/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/mytime",
+        name: "mytime",
+        props: true,
+        component: () => import("@/views/mytime/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/timeoffrequest",
+        name: "timeoffrequest",
+        props: true,
+        component: () => import("@/views/mytime/timeoffrequest"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/communications",
+        name: "communications",
+        props: true,
+        component: () => import("@/views/communications/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/bankdetails/:personId?",
+        name: "bankdetails",
+        props: true,
+        component: () => import("@/views/bankdetails/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/newhire",
+        name: "newhire",
+        props: true,
+        component: () => import("@/views/newhire/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/candidatelogin/:candidateId/:candidateToken",
+        name: "candidatelogin",
+        props: true,
+        component: () => import("@/views/candidatelogin/index"),        
+    },
+    {
+        path: "/viewcandidate/:candidateId",
+        name: "Viewcandidate",
+        props: true,
+        component: () => import("@/components/newhire/Viewcandidate"),
         meta: {
             requiresAuth: true,
         }
