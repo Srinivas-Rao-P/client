@@ -26,6 +26,7 @@
       v-if="showMenuHeader"
     >
       <Menu @collapse="miniVariant = !miniVariant" />
+      <!-- <Menu /> -->
     </v-navigation-drawer>
 
     <v-main id="main" class="honeydew">
@@ -104,7 +105,8 @@ export default {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.no-background-hover::before {
+.no-background-hover:before,
+.v-list-item--link:before {
   background-color: transparent !important;
 }
 .fade-enter,

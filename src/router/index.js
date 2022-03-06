@@ -57,6 +57,14 @@ const routes = [
         }
     },
     {
+        path: "/menu",
+        name: "menu",
+        component: () => import("@/views/menu/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
         path: "/mypay",
         name: "mypay",
         component: () => import("@/components/Mypay"),

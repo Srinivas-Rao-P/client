@@ -24,7 +24,7 @@
               solo
               dense
               flat
-              disabled
+              
               hide-details="auto"
             ></v-text-field>
           </v-col>
@@ -43,7 +43,7 @@
               solo
               dense
               flat
-              disabled
+              
               hide-details="auto"
             ></v-text-field>
           </v-col>
