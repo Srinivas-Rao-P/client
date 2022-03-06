@@ -14,8 +14,25 @@
         <template #listerTitle>
           <div class="font-weight-black mb-4">New hire</div>
         </template>
+        <template #profile="table">
+          <v-btn
+            icon
+            fab
+            x-small
+            dark
+            depressed
+            color="primary"            
+            :to="{
+              name: 'profile',
+              params: { personId: table.row.id },
+            }"
+          >
+            <v-icon color="primary">mdi-account</v-icon>
+          </v-btn>
+        </template>
         <template #firstname="table">
           <router-link
+            class="ml-2"
             :to="{
               name: 'Viewcandidate',
               params: { candidateId: table.row.id },
@@ -29,7 +46,7 @@
               <v-btn
                 icon
                 fab
-                small
+                x-small
                 dark
                 depressed
                 color="primary"
@@ -55,7 +72,7 @@
               <v-btn
                 icon
                 fab
-                small
+                x-small
                 dark
                 depressed
                 color="primary"
@@ -110,7 +127,8 @@ export default {
   data() {
     return {
       columns: [
-        { title: "Full name", key: "firstname", type: "custom", align: "left"  },
+        { title: "Profile", key: "profile", type: "custom" },
+        { title: "Full name", key: "firstname", type: "custom", align: "left" },
         { title: "Email", key: "email" },
         { title: "Designation", key: "designation" },
         { title: "Date", key: "date", type: "date" },
@@ -139,9 +157,9 @@ export default {
     sendEmail(data) {
       sendEmail({ id: data.id, email: data.email })
         .then((response) => {
-          if(response.status == 200){
+          if (response.status == 200) {
             this.$toast.success("Email sent successfully");
-          }                
+          }
         })
         .catch((error) => {
           console.log(error);

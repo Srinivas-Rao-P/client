@@ -21,7 +21,7 @@
               <v-btn
                 icon
                 fab
-                small
+                x-small
                 dark
                 depressed
                 color="primary"
