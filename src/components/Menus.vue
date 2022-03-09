@@ -56,104 +56,116 @@
             </v-icon>
           </v-btn>
         </v-list-item>
-        <template v-for="menuitem in menu">
-          <v-list-group
-            v-if="!collapse && menuitem.submenu.length > 0"
-            :key="menuitem.id"
-            :value="false"
-            color="primary"
-            :ripple="false"
-          >
-            <template v-slot:activator>
-              <v-list-item-title class="no-background-hover">{{
-                menuitem.name
-              }}</v-list-item-title>
-            </template>
+        <template v-for="menuitem in menus">
+          <template v-if="!collapse">
+            <v-list-group
+              v-if="menuitem.submenu.length > 0"
+              :key="menuitem.id"
+              :value="false"
+              color="primary"
+              :ripple="false"
+            >
+              <template v-slot:activator>
+                <v-list-item-title class="no-background-hover">{{
+                  menuitem.name
+                }}</v-list-item-title>
+              </template>
+              <v-list-item
+                v-for="submenuitem in menuitem.submenu"
+                :key="submenuitem.id"
+                link
+                exact
+                exact-active-class="active"
+                :ripple="false"
+                class="no-background-hover"
+                :to="submenuitem.link"
+              >
+                <v-list-item-icon class="mr-2">
+                  <v-icon dense color="primary">
+                    {{ submenuitem.icon }}
+                  </v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ submenuitem.name }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-group>
+
             <v-list-item
-              v-for="submenuitem in menuitem.submenu"
-              :key="submenuitem.id"
+              v-else
+              :key="menuitem.id"
               link
               exact
               exact-active-class="active"
               :ripple="false"
               class="no-background-hover"
-              :to="submenuitem.link"
+              :to="menuitem.link"
             >
-              <v-list-item-icon class="mr-2">
-                <v-icon dense color="primary">
-                  {{ submenuitem.icon }}
-                </v-icon>
-              </v-list-item-icon>
-
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ submenuitem.name }}
+                  {{ menuitem.name }}
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-          </v-list-group>
+          </template>
 
-          <!-- <v-list-item
-            v-else-if="collapse && menuitem.submenu.length > 0"
-            v-for="submenuitem in menuitem.submenu"
-            :key="submenuitem.id"
-            link
-            exact
-            exact-active-class="active"
-            :ripple="false"
-            class="no-background-hover"
-          >
-            <v-tooltip right color="primary" v-if="collapse" :open-delay="300">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  @mouseover="tooltipText = submenuitem.name"
-                  icon
-                  plain
-                  x-small
-                  depressed
-                  link
-                  :to="menuitem.link"
-                >
+          <template v-else>
+            <v-list-item
+              v-if="menuitem.submenu.length == 0"
+              :key="menuitem.name"
+              link
+              exact
+              dense
+              exact-active-class="active"
+              :ripple="false"
+              class="no-background-hover"
+              :to="menuitem.link"
+            >
+              <v-tooltip
+                right
+                color="primary"
+                v-if="collapse"
+                :open-delay="300"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" v-on="on" dense color="primary">
+                    {{ menuitem.icon }}
+                  </v-icon>
+                </template>
+                <span> {{ menuitem.name }}</span>
+              </v-tooltip>
+            </v-list-item>
+
+            <v-list-item
+              v-else
+              v-for="submenuitem in menuitem.submenu"
+              :key="submenuitem.id"
+              link
+              exact
+              dense
+              exact-active-class="active"
+              :ripple="false"
+              class="no-background-hover"
+              :to="submenuitem.link"
+            >
+              <v-tooltip
+                right
+                color="primary"
+                v-if="collapse"
+                :open-delay="300"
+              >
+                <template v-slot:activator="{ on, attrs }">
                   <v-icon v-bind="attrs" v-on="on" dense color="primary">
                     {{ submenuitem.icon }}
                   </v-icon>
-                </v-btn>
-              </template>
-              <span> {{ tooltipText }}</span>
-            </v-tooltip>
-          </v-list-item> -->
-
-          <v-list-item
-            v-else
-            :key="menuitem.id"
-            link
-            exact
-            exact-active-class="active"
-            :ripple="false"
-            class="no-background-hover"
-          >
-            <v-tooltip right color="primary" v-if="collapse" :open-delay="300">
-              <template v-slot:activator="{ on, attrs }">
-                <v-list-item-icon
-                  @mouseover="tooltipText = menuitem.name"
-                  class="mr-2"
-                >
-                  <v-btn icon plain x-small depressed link :to="menuitem.link">
-                    <v-icon v-bind="attrs" v-on="on" dense color="primary">
-                      {{ menuitem.icon }}
-                    </v-icon>
-                  </v-btn>
-                </v-list-item-icon>
-              </template>
-              <span> {{ tooltipText }}</span>
-            </v-tooltip>
-
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ menuitem.name }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+                </template>
+                <span> {{ submenuitem.name }}</span>
+              </v-tooltip>
+            </v-list-item>
+          </template>
 
           <!-- <v-list-item
             v-else-if="!menuitem.submenuid"
@@ -217,10 +229,10 @@
 <script>
 import { getMenu } from "@/services/menu/menuService.js";
 export default {
+  name:"menus",
   data() {
     return {
-      menu: [],
-      submenu: [],
+      menus: [],
       collapse: false,
       tooltipText: "",
     };
@@ -236,25 +248,15 @@ export default {
     getMenu() {
       getMenu()
         .then((response) => {
-          this.menu = response.data;
-          this.menu.map((e) => {
+          this.menus = response.data;
+          this.menus.map((e) => {
             e.submenu = JSON.parse(e.submenu);
           });
         })
         .catch((error) => {
           console.log(error);
         });
-    },
-    // getSubMenu(menuId) {
-    //   getSubMenu({ menuId: menuId })
-    //     .then((response) => {
-    //       this.submenu = response.data;
-    //       this.$vuetify.goTo(0, 0);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
+    },  
   },
 };
 </script>

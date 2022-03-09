@@ -25,7 +25,7 @@
       clipped
       v-if="showMenuHeader"
     >
-      <Menu @collapse="miniVariant = !miniVariant" />
+      <Menus @collapse="miniVariant = !miniVariant" />
       <!-- <Menu /> -->
     </v-navigation-drawer>
 
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Menu from "@/components/Menu";
+import Menus from "@/components/Menus";
 import Header from "@/components/Header";
 export default {
   name: "App",
@@ -55,7 +55,7 @@ export default {
     };
   },
   components: {
-    Menu,
+    Menus,
     Header,
   },
   created() {

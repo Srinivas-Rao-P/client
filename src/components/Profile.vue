@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form">
-    <v-row dense>
+    <v-row dense v-if="profile">
       <v-col cols="12" lg="3" md="4">
         <v-card class="px-3 py-10">
           <v-row justify="center" class="text-center">
@@ -330,21 +330,7 @@ export default {
   name: "profile",
   data() {
     return {
-      profile: {
-        imageurl: "",
-        firstname: "",
-        lastname: "",
-        phone: "",
-        email: "",
-        workmail: "",
-        address: "",
-        state: "",
-        city: "",
-        zipcode: "",
-        nationality: "",
-        dateofbirth: "",
-        gender: "",
-      },
+      profile: null,
       el: 1,
       loading: false,
       zipcodeRules: [
