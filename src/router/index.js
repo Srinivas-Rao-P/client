@@ -57,9 +57,9 @@ const routes = [
         }
     },
     {
-        path: "/menu",
-        name: "menu",
-        component: () => import("@/views/menu/index"),
+        path: "/managemenus",
+        name: "managemenus",
+        component: () => import("@/views/managemenus/index"),
         meta: {
             requiresAuth: true,
         }
