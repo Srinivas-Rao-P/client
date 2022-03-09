@@ -1,5 +1,5 @@
 <template>
-  <div ref="mainContainer">
+  <div ref="mainContainer" @click="$parent.$el.click()">
     <v-row no-gutters justify="space-between">
       <v-col cols="12" align-self="center">
         <slot name="listerTitle"></slot>

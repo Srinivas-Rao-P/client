@@ -78,7 +78,7 @@
                 exact-active-class="active"
                 :ripple="false"
                 class="no-background-hover"
-                :to="submenuitem.link"
+                :to="{ name: submenuitem.link }"
               >
                 <v-list-item-icon class="mr-2">
                   <v-icon dense color="primary">
@@ -102,7 +102,7 @@
               exact-active-class="active"
               :ripple="false"
               class="no-background-hover"
-              :to="menuitem.link"
+              :to="{ name: menuitem.link }"
             >
               <v-list-item-content>
                 <v-list-item-title>
@@ -122,7 +122,7 @@
               exact-active-class="active"
               :ripple="false"
               class="no-background-hover"
-              :to="menuitem.link"
+              :to="{ name: menuitem.link }"
             >
               <v-tooltip
                 right
@@ -149,7 +149,7 @@
               exact-active-class="active"
               :ripple="false"
               class="no-background-hover"
-              :to="submenuitem.link"
+              :to="{ name: submenuitem.link }"
             >
               <v-tooltip
                 right
@@ -229,7 +229,7 @@
 <script>
 import { getMenu } from "@/services/menu/menuService.js";
 export default {
-  name:"menus",
+  name: "menus",
   data() {
     return {
       menus: [],
@@ -256,7 +256,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },  
+    },
   },
 };
 </script>

@@ -12,7 +12,7 @@
                 width="100"
                 @click="$refs.inputProfileImage.click()"
               >
-                <v-img v-if="profile" :src="profile.imageurl"></v-img>
+                <v-img v-if="profile.imageurl" :src="profile.imageurl"></v-img>
                 <v-icon v-else dark x-large> mdi-account-circle </v-icon>
               </v-avatar>
 

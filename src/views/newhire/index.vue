@@ -23,7 +23,7 @@
             depressed
             color="primary"            
             :to="{
-              name: 'profile',
+              name: 'profileindex',
               params: { personId: table.row.id },
             }"
           >
