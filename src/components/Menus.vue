@@ -233,7 +233,7 @@ export default {
   data() {
     return {
       menus: [],
-      collapse: false,
+      collapse: JSON.parse(localStorage.getItem("collapse")),
       tooltipText: "",
     };
   },
@@ -243,6 +243,7 @@ export default {
   methods: {
     collapseMenu() {
       this.collapse = !this.collapse;
+      localStorage.setItem("collapse", this.collapse);
       this.$emit("collapse");
     },
     getMenu() {

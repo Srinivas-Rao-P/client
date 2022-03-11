@@ -2,7 +2,8 @@
   <v-row no-gutters justify="center" class="fill-height">
     <v-col cols="12" md="6" lg="4" align-self="center">
       <h1>Login</h1>
-      <h3>Your session has expired.</h3>
+      <!-- <h3>Your session has expired.</h3>
+      <h3>{{ candidateToken }}</h3> -->
 
       <v-form ref="form" lazy-validation @submit.prevent="login">
         <v-row no-gutters>
@@ -18,7 +19,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" v-if="!candidateToken">
             <v-text-field
               label="Password"
               v-model="password"
@@ -55,13 +56,14 @@
 </template>
 
 <script>
-import { login } from "@/services/login/loginService";
+import VueJwtDecode from "vue-jwt-decode";
+import { login, candidateLogin } from "@/services/login/loginService";
 export default {
   name: "login",
   data() {
     return {
-      username: "hr",
-      password: "xyz",
+      username: "",
+      password: "",
       rules: {
         nameRules: (v) => !!v || "Username/Email is required",
         passwordRules: (v) => !!v || "Password is required",
@@ -69,26 +71,70 @@ export default {
       isLoading: false,
     };
   },
+  props: {
+    candidateId: {
+      default: null,
+    },
+    candidateToken: {
+      type: String,
+      default: null,
+    },
+  },
+  computed: {
+    isCandidate() {
+      return !!this.candidateToken;
+    },
+    decoded() {
+      return VueJwtDecode.decode(this.candidateToken);
+    },
+  },
+  created() {
+    if (this.isCandidate) {
+      this.username = this.decoded.email;
+      this.candidateLogin();
+    }
+  },
   methods: {
+    candidateLogin() {
+      candidateLogin(this.username, this.candidateToken, this.candidateId)
+        .then((response) => {
+          if (response.data.accessToken) {
+            localStorage.setItem("token", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
+            this.$router.push({ name: "home" });
+          } else {
+            this.$toast.error("Token not found");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     login() {
       if (this.$refs.form.validate()) {
-        login(this.username, this.password)
-          .then((response) => {
-            if (response.data.accessToken) {
-                        
-              // window.token = window.accessToken;
-              // window.refreshToken = window.refreshToken;
-              // Vue.$cookies.set("token", window.token);
-              localStorage.setItem("token", response.data.accessToken);
-              localStorage.setItem("refreshToken", response.data.refreshToken);
-              this.$router.push({ name: "home" });
-            } else {
-              this.$toast.error("Token not found");
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        if (this.isCandidate) {
+          this.candidateLogin();
+        } else {
+          login(this.username, this.password)
+            .then((response) => {
+              if (response.data.accessToken) {
+                // window.token = window.accessToken;
+                // window.refreshToken = window.refreshToken;
+                // Vue.$cookies.set("token", window.token);
+                localStorage.setItem("token", response.data.accessToken);
+                localStorage.setItem(
+                  "refreshToken",
+                  response.data.refreshToken
+                );
+                this.$router.push({ name: "home" });
+              } else {
+                this.$toast.error("Token not found");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       }
     },
   },

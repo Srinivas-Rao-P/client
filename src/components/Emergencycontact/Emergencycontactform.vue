@@ -1,14 +1,52 @@
 <template>
-  <v-form ref="form" lazy-validation @submit.prevent="saveBank" class="pa-4 pa-md-10 pa-lg-12">
+  <v-form
+    ref="form"
+    lazy-validation
+    @submit.prevent="saveEmergencyContact"
+    class="pa-4 pa-md-10 pa-lg-12"
+  >
     <v-row justify="center">
       <v-col cols="12" lg="8" md="8">
         <v-row>
           <v-col cols="12" lg="6" md="6">
-            <span>Account holder name</span>
+            <span>Name</span>
             <v-text-field
-              v-model="bankData.accountholdername"
-              placeholder="Account holder name"
+              v-model="emergencyContact.name"
+              placeholder="Name"
+              :rules="nameRules"
               required
+              outlined
+              solo
+              dense
+              flat
+              hide-details="auto"
+              autocomplete="nope"
+              clearable
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="6" md="6">
+            <span>Email</span>
+            <v-text-field
+              v-model="emergencyContact.email"
+              placeholder="Email"
+              :rules="emergencyContact.email ? emailRules : [true]"
+              outlined
+              solo
+              dense
+              flat
+              hide-details="auto"
+              autocomplete="nope"
+              clearable
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="6" md="6">
+            <span>Phone</span>
+            <v-text-field
+              v-model="emergencyContact.phone"
+              placeholder="Phone"
+              :rules="phoneRules"
+              type="number"
+              hide-spin-buttons
               outlined
               solo
               dense
@@ -20,34 +58,17 @@
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
-            <span>Account Number</span>
-            <v-text-field
-              v-model="bankData.accountnumber"
-              placeholder="Account Number"
-              :rules="accountNumberRules"
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-              clearable
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="12" lg="6" md="6">
-            <span>Account Type</span>
+            <span>Relationship</span>
             <v-autocomplete
-              :items="bankaccounttypes"
-              v-model="bankData.accounttypeid"
-              placeholder="Account Type"
-              :rules="accountTypeRules"
+              :items="relationshipList"
+              v-model="emergencyContact.relationshipid"
+              placeholder="Relationship"
+              :rules="relationshipRules"
               :disabled="isEditMode"
               clearable
               hide-details="auto"
               autocomplete="nope"
-              item-text="type"
+              item-text="relationship"
               item-value="id"
               required
               outlined
@@ -58,12 +79,10 @@
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
-            <span>IFSC</span>
-            <v-text-field
-              v-model="bankData.ifsccode"
-              placeholder="IFSC"
-              :rules="ifscRules"
-              required
+            <span>Address</span>
+            <v-textarea
+              v-model="emergencyContact.address"
+              placeholder="Address"
               outlined
               solo
               dense
@@ -71,55 +90,23 @@
               hide-details="auto"
               autocomplete="nope"
               clearable
-              @input="bankData.ifsccode && getBranchFromIfsc()"
-            ></v-text-field>
+              rows="2"
+              auto-grow
+            ></v-textarea>
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
-            <span>Bank name</span>
-            <v-text-field
-              v-model="bankData.bankname"
-              disabled
-              placeholder="Bank Name"
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="12" lg="6" md="6">
-            <span>Branch</span>
-            <v-text-field
-              v-model="bankData.bankbranch"
-              placeholder="Branch"
-              disabled
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="12">
-            <span>Bank Address</span>
+            <span>Notes</span>
             <v-textarea
-              v-model="bankData.bankaddress"
-              placeholder="Bank Address"
-              disabled
-              required
+              v-model="emergencyContact.notes"
+              placeholder="Notes"
               outlined
               solo
               dense
               flat
               hide-details="auto"
               autocomplete="nope"
+              clearable
               rows="2"
               auto-grow
             ></v-textarea>
@@ -157,32 +144,28 @@
 </template>
 <script>
 import {
-  addBank,
-  getBankData,
-  updateBank,
+  addEmergencyContact,
+  getEmergencyContact,
+  updateEmergencyContact,
   create,
-} from "@/services/bank/bankService.js";
-import ifsc from "ifsc";
+} from "@/services/emergencycontact/emergencycontactService.js";
 export default {
-  name: "Bankform",
+  name: "Emergencycontactform",
   data() {
     return {
-      bankData: {
-        accountholdername: "",
-        bankname: "",
-        accounttypeid: "",
-        accountnumber: "",
-        ifsccode: "",
-        bankbranch: "",
-        bankaddress: "",
+      emergencyContact: {
+        name: "",
+        email: "",
+        phone: "",
+        relationshipid: "",
+        address: "",
+        notes: "",
       },
-      accountNumberRules: [(v) => !!v || "Please enter a Account number"],
-      ifscRules: [
-        (v) => !!v || "Please enter a Ifsc code",
-        (v) => (!!v && ifsc.validate(v)) || "Invalid Ifsc code",
-      ],
-      accountTypeRules: [(v) => !!v || "Please select a Account type"],
-      bankaccounttypes: [],
+      nameRules: [(v) => !!v || "Please enter a name"],
+      emailRules: [(v) => /.+@.+\..+/.test(v) || "E-mail must be valid"],
+      phoneRules: [(v) => !!v || "Please enter a number"],
+      relationshipRules: [(v) => !!v || "Please make a selection"],
+      relationshipList: [],
     };
   },
   props: {
@@ -206,32 +189,13 @@ export default {
     isAddMode() {
       return this.mode === "add";
     },
-
-    // validateIfscCode() {
-    //   ifsc.validate('BOTM0XEEMRA'); // returns false
-    //   ifsc.fetchDetails(this.ifsccode).then(function (res) {
-    //     console.log(res);
-    //   });
-    //   console.log(ifsc.validate(this.ifsccode))
-    //   return this.ifsccode ? ifsc.validate(this.ifsccode) : true; // returns true
-    // console.log(ifsc.bank.PUNB);
-    // },
   },
   components: {},
-  watch: {
-    "bankData.ifsccode"(v) {
-      if (!v || !ifsc.validate(v)) {
-        this.bankData.bankname = "";
-        this.bankData.bankbranch = "";
-        this.bankData.bankaddress = "";
-      }
-    },
-  },
   methods: {
-    saveBank() {
+    saveEmergencyContact() {
       if (this.$refs.form.validate()) {
         if (this.isAddMode) {
-          addBank(this.personId, this.bankData)
+          addEmergencyContact(this.personId, this.emergencyContact)
             .then(() => {
               this.$refs.form.reset();
               this.$emit("done");
@@ -241,7 +205,7 @@ export default {
             });
         }
         if (this.isEditMode) {
-          updateBank(this.personId, this.bankData)
+          updateEmergencyContact(this.personId, this.emergencyContact)
             .then(() => {
               this.$refs.form.reset();
               this.$emit("done");
@@ -255,31 +219,22 @@ export default {
     cancel() {
       this.$emit("cancel");
     },
-    getBranchFromIfsc() {
-      if (ifsc.validate(this.bankData.ifsccode)) {
-        ifsc.fetchDetails(this.bankData.ifsccode).then((res) => {
-          this.bankData.bankname = res.BANK.toLowerCase();
-          this.bankData.bankbranch = res.BRANCH.toLowerCase();
-          this.bankData.bankaddress = res.ADDRESS.toLowerCase();
-        });
-      }
-    },
   },
   async created() {
     if (this.isAddMode) {
       await create(this.personId)
         .then((response) => {
-          this.bankaccounttypes = response.data.bankaccounttypes;
+          this.relationshipList = response.data.relationshipList;
         })
         .catch((error) => {
           console.log(error);
         });
     }
     if (this.isEditMode) {
-      getBankData(this.id)
+      getEmergencyContact(this.id)
         .then((response) => {
-          this.bankData = response.data.list;
-          this.bankaccounttypes = response.data.bankaccounttypes;
+          this.emergencyContact = response.data.list;
+          this.relationshipList = response.data.relationshipList;
         })
         .catch((error) => {
           console.log(error);
