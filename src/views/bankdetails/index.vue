@@ -138,7 +138,7 @@ export default {
         { title: "Type", key: "type" },
         { title: "Account number", key: "accountnumber" },
         { title: "IFSC code", key: "ifsccode" },
-        { title: "action", key: "action", type: "custom" },
+        { title: "action", key: "action", type: "custom", fixed: "right" },
       ],
       tableData: [],
       canAddBank: true,

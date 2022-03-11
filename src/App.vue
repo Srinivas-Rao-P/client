@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       drawer: false,
-      miniVariant: false,
+      miniVariant: JSON.parse(localStorage.getItem("collapse")),
     };
   },
   components: {
@@ -75,7 +75,7 @@ export default {
     showMenuHeader() {
       if (
         this.$route.name &&
-        !["login", "register"].includes(this.$route.name)
+        !["login", "register", "candidatelogin"].includes(this.$route.name)
       ) {
         return true;
       } else {

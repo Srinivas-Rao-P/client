@@ -10,8 +10,8 @@ const routes = [
         component: () => import("@/components/auth/Login"),
         meta: {
             requiresVisitor: true,
-        }
-        
+        },
+        props: true
     },
     {
         path: "/register",
@@ -109,6 +109,15 @@ const routes = [
         }
     },
     {
+        path: "/emergencycontacts/:personId?",
+        name: "emergencycontacts",
+        props: true,
+        component: () => import("@/views/emergencycontacts/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
         path: "/bankdetails/:personId?",
         name: "bankdetails",
         props: true,
@@ -130,7 +139,7 @@ const routes = [
         path: "/candidatelogin/:candidateId/:candidateToken",
         name: "candidatelogin",
         props: true,
-        component: () => import("@/views/candidatelogin/index"),        
+        component: () => import("@/views/candidatelogin/index"),
     },
     {
         path: "/viewcandidate/:candidateId",

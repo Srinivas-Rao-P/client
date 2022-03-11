@@ -57,48 +57,244 @@
             </v-col>
           </v-row>
         </v-card>
-        <v-card class="mt-2 pa-3">
-          <v-row>
-            <v-col cols="12">
-              <div>
-                <v-icon color="primary"> mdi-linkedin </v-icon>
-                <span class="ml-2">@linkedin</span>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card class="mt-2 pa-3">
-          <v-row>
-            <v-col cols="12">
-              <div>
-                <v-icon color="primary"> mdi-twitter </v-icon>
-                <span class="ml-2">@twitter</span>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card class="mt-2 pa-3">
-          <v-row>
-            <v-col cols="12">
-              <div>
-                <v-icon color="primary"> mdi-card-account-details </v-icon>
-                <span class="ml-2">12134567890</span>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card class="mt-2 pa-3">
-          <v-row>
-            <v-col cols="12">
-              <div>
-                <v-icon color="primary">
-                  mdi-card-account-details-outline
-                </v-icon>
-                <span class="ml-2">ABCDE5678F</span>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card>
+        <v-hover v-slot="{ hover }">
+          <v-card class="mt-2 pa-3">
+            <v-row>
+              <v-col cols="12">
+                <div class="d-flex align-center">
+                  <v-icon color="primary"> mdi-linkedin </v-icon>
+                  <div class="mx-2" style="width: 100%">
+                    <v-text-field
+                      autofocus
+                      v-if="editLinkedin"
+                      v-model="linkedin"
+                      placeholder="Linked In"
+                      outlined
+                      flat
+                      solo
+                      dense
+                      hide-details
+                      autocomplete="nope"
+                    ></v-text-field>
+                    <span v-else-if="linkedin">{{ linkedin }}</span>
+                    <span v-else>Linked In</span>
+                  </div>
+                  <div class="ml-auto">
+                    <v-btn
+                      v-if="editLinkedin"
+                      block
+                      icon
+                      x-small
+                      right
+                      @click="editLinkedin = !editLinkedin"
+                    >
+                      <v-icon color="primary" dense small>
+                        mdi-check-bold
+                      </v-icon>
+                    </v-btn>
+
+                    <v-btn
+                      v-else
+                      icon
+                      block
+                      x-small
+                      right
+                      @click="editLinkedin = !editLinkedin"
+                    >
+                      <v-icon
+                        :class="{ 'd-lg-none': !hover }"
+                        color="primary"
+                        dense
+                        small
+                      >
+                        mdi-pencil
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-hover>
+        <v-hover v-slot="{ hover }">
+          <v-card class="mt-2 pa-3">
+            <v-row>
+              <v-col cols="12">
+                <div class="d-flex align-center">
+                  <v-icon color="primary"> mdi-twitter </v-icon>
+                  <div class="mx-2" style="width: 100%">
+                    <v-text-field
+                      autofocus
+                      v-if="editTwitter"
+                      v-model="twitter"
+                      placeholder="Twitter"
+                      outlined
+                      flat
+                      solo
+                      dense
+                      hide-details
+                      autocomplete="nope"
+                    ></v-text-field>
+                    <span v-else-if="twitter">{{ twitter }}</span>
+                    <span v-else>Twitter</span>
+                  </div>
+                  <div class="ml-auto">
+                    <v-btn
+                      v-if="editTwitter"
+                      block
+                      icon
+                      x-small
+                      right
+                      @click="editTwitter = !editTwitter"
+                    >
+                      <v-icon color="primary" dense small>
+                        mdi-check-bold
+                      </v-icon>
+                    </v-btn>
+
+                    <v-btn
+                      v-else
+                      icon
+                      block
+                      x-small
+                      right
+                      @click="editTwitter = !editTwitter"
+                    >
+                      <v-icon
+                        :class="{ 'd-lg-none': !hover }"
+                        color="primary"
+                        dense
+                        small
+                      >
+                        mdi-pencil
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-hover>
+        <v-hover v-slot="{ hover }">
+          <v-card class="mt-2 pa-3">
+            <v-row>
+              <v-col cols="12">
+                <div class="d-flex align-center">
+                  <v-icon color="primary"> mdi-card-account-details </v-icon>
+                  <div class="mx-2" style="width: 100%">
+                    <v-text-field
+                      autofocus
+                      v-if="editPan"
+                      v-model="pan"
+                      placeholder="Pan Card"
+                      outlined
+                      flat
+                      solo
+                      dense
+                      hide-details
+                      autocomplete="nope"
+                    ></v-text-field>
+                    <span v-else-if="pan">{{ pan }}</span>
+                    <span v-else>Pan Card</span>
+                  </div>
+                  <div class="ml-auto">
+                    <v-btn
+                      v-if="editPan"
+                      block
+                      icon
+                      x-small
+                      right
+                      @click="editPan = !editPan"
+                    >
+                      <v-icon color="primary" dense small>
+                        mdi-check-bold
+                      </v-icon>
+                    </v-btn>
+
+                    <v-btn
+                      v-else
+                      icon
+                      block
+                      x-small
+                      right
+                      @click="editPan = !editPan"
+                    >
+                      <v-icon
+                        :class="{ 'd-lg-none': !hover }"
+                        color="primary"
+                        dense
+                        small
+                      >
+                        mdi-pencil
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-hover>
+        <v-hover v-slot="{ hover }">
+          <v-card class="mt-2 pa-3">
+            <v-row>
+              <v-col cols="12">
+                <div class="d-flex align-center">
+                  <v-icon color="primary">
+                    mdi-card-account-details-outline
+                  </v-icon>
+                  <div class="mx-2" style="width: 100%">
+                    <v-text-field
+                      autofocus
+                      v-if="editAddar"
+                      v-model="addar"
+                      placeholder="Addar crad"
+                      outlined
+                      flat
+                      solo
+                      dense
+                      hide-details
+                      autocomplete="nope"
+                    ></v-text-field>
+                    <span v-else-if="addar">{{ addar }}</span>
+                    <span v-else>Addar card</span>
+                  </div>
+                  <div class="ml-auto">
+                    <v-btn
+                      v-if="editAddar"
+                      block
+                      icon
+                      x-small
+                      right
+                      @click="editAddar = !editAddar"
+                    >
+                      <v-icon color="primary" dense small>
+                        mdi-check-bold
+                      </v-icon>
+                    </v-btn>
+
+                    <v-btn
+                      v-else
+                      icon
+                      block
+                      x-small
+                      right
+                      @click="editAddar = !editAddar"
+                    >
+                      <v-icon
+                        :class="{ 'd-lg-none': !hover }"
+                        color="primary"
+                        dense
+                        small
+                      >
+                        mdi-pencil
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-hover>
       </v-col>
 
       <v-col cols="12" lg="9" md="8">
@@ -142,6 +338,8 @@
                 placeholder="Phone"
                 color="primary"
                 hide-details="auto"
+                type="number"
+                hide-spin-buttons
                 dense
                 flat
                 outlined
@@ -330,6 +528,14 @@ export default {
   name: "profile",
   data() {
     return {
+      editLinkedin: false,
+      editTwitter: false,
+      editPan: false,
+      editAddar: false,
+      linkedin: "",
+      twitter: "",
+      addar: "",
+      pan: "",
       profile: null,
       el: 1,
       loading: false,
@@ -340,7 +546,10 @@ export default {
       stateRules: [(v) => !!v || "State is required"],
       cityRules: [(v) => !!v || "City is required"],
       addressRules: [(v) => !!v || "Address is required"],
-      emailRules: [(v) => !!v || "Email is required"],
+      emailRules: [
+        (v) => !!v || "Please enter a valid email",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
       lastnameRules: [(v) => !!v || "Lastname is required"],
       firstnameRules: [(v) => !!v || "Firstname is required"],
       nationalityRules: [(v) => !!v || "Nationality is required"],
@@ -363,6 +572,11 @@ export default {
     personId: {
       type: [Number, String],
       default: window.personId,
+    },
+  },
+  watch: {
+    personId() {
+      this.getProfile();
     },
   },
   computed: {

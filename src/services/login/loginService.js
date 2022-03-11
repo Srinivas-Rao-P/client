@@ -6,6 +6,13 @@ export const login = (username, password) => {
         password: password
     });
 }
+export const candidateLogin = (email, token, candidateId) => {
+    return authService.post("/auth/candidateLogin", {
+        email: email.toLowerCase(),
+        token: token,
+        candidateId: candidateId
+    });
+}
 export const logout = (token) => {
     return authService.post("/auth/logout", {
         token: token,
