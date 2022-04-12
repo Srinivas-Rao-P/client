@@ -37,15 +37,17 @@
           >
             <!--Items Per Page-->
 
-            <v-autocomplete
+            <v-select
               v-model="userPreference.pageSize"
               :items="itemOption"
+              item-text="text"
+              item-value="value"
               hide-details
               flat
               solo
               dense
               outlined
-            ></v-autocomplete>
+            ></v-select>
           </v-col>
         </v-row>
       </v-col>
