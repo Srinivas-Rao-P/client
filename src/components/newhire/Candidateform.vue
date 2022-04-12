@@ -24,7 +24,6 @@
               solo
               dense
               flat
-              
               hide-details="auto"
             ></v-text-field>
           </v-col>
@@ -43,7 +42,6 @@
               solo
               dense
               flat
-              
               hide-details="auto"
             ></v-text-field>
           </v-col>
@@ -148,6 +146,94 @@
             ></v-autocomplete>
           </v-col>
         </v-row>
+
+        <!-- <v-row v-if="candidateData.status == 3">
+          <v-col cols="12" lg="4" md="4">
+            <span>Candidate Id</span>
+             <v-text-field
+              v-model="candidateData.emailtype"
+              placeholder="Email Type"
+              autocomplete="nope"
+              aria-label="emailtype"
+              clearable
+              required
+              outlined
+              solo
+              dense
+              flat
+              hide-details="auto"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="8" md="8">
+            <span>Work mail</span>
+            <v-text-field
+              v-model="candidateData.email"
+              placeholder="Email"
+              :rules="emailRules"
+              autocomplete="nope"
+              aria-label="email"
+              clearable
+              required
+              outlined
+              solo
+              dense
+              flat
+              hide-details="auto"
+            ></v-text-field>
+          </v-col>
+        
+          <v-col cols="12" lg="4" md="4">
+            <span>Work location</span>
+            <v-text-field
+              v-model="candidateData.email"
+              placeholder="Email"
+              :rules="emailRules"
+              autocomplete="nope"
+              aria-label="email"
+              clearable
+              required
+              outlined
+              solo
+              dense
+              flat
+              hide-details="auto"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="4" md="4">
+            <span>Shift</span>
+            <v-text-field
+              v-model="candidateData.email"
+              placeholder="Email"
+              :rules="emailRules"
+              autocomplete="nope"
+              aria-label="email"
+              clearable
+              required
+              outlined
+              solo
+              dense
+              flat
+              hide-details="auto"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="4" md="4">
+            <span>Work type</span>
+            <v-text-field
+              v-model="candidateData.email"
+              placeholder="Email"
+              :rules="emailRules"
+              autocomplete="nope"
+              aria-label="email"
+              clearable
+              required
+              outlined
+              solo
+              dense
+              flat
+              hide-details="auto"
+            ></v-text-field>
+          </v-col>
+        </v-row> -->
 
         <v-row>
           <v-col cols="12">
@@ -257,9 +343,17 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.isAddMode) {
           addCandidate(this.candidateData)
-            .then(() => {
-              this.$refs.form.reset();
-              this.$emit("done");
+            .then((res) => {
+              console.log(res);
+              if (this.candidateData.status == 3) {
+                this.$router.push({
+                  name: "navbar",
+                  params: { personId: res.data.insertId },
+                });
+              } else {
+                this.$refs.form.reset();
+                this.$emit("done");
+              }
             })
             .catch((error) => {
               console.log(error);

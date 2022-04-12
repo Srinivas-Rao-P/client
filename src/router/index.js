@@ -118,6 +118,15 @@ const routes = [
         }
     },
     {
+        path: "/documents/:personId?",
+        name: "documents",
+        props: true,
+        component: () => import("@/views/documents/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
         path: "/bankdetails/:personId?",
         name: "bankdetails",
         props: true,
@@ -146,6 +155,39 @@ const routes = [
         name: "Viewcandidate",
         props: true,
         component: () => import("@/components/newhire/Viewcandidate"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/navbar/:personId",
+        name: "navbar",
+        props: true,
+        component: () => import("@/views/navbar/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/manageroles",
+        name: "manageroles",
+        component: () => import("@/views/manageroles/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/manageuserroles",
+        name: "manageuserroles",
+        component: () => import("@/views/manageuserroles/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/passwordpolicy",
+        name: "passwordpolicy",
+        component: () => import("@/views/passwordpolicy/index"),
         meta: {
             requiresAuth: true,
         }

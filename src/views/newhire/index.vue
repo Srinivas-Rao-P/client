@@ -1,4 +1,5 @@
 <template>
+<v-container fluid>
   <v-row>
     <v-col cols="12">
       <lister
@@ -34,8 +35,8 @@
           <router-link
             class="ml-2"
             :to="{
-              name: 'Viewcandidate',
-              params: { candidateId: table.row.id },
+              name: 'navbar',
+              params: { personId: table.row.id },
             }"
             >{{ table.row.firstname }} {{ table.row.lastname }}
           </router-link>
@@ -115,6 +116,7 @@
       </v-card>
     </v-col>
   </v-row>
+</v-container>
 </template>
 <script>
 import lister from "@/components/easyTable/Index.vue";

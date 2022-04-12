@@ -14,7 +14,7 @@
           :search="true"
         >
           <template #listerTitle>
-            <b>Emergency Contacts</b>
+            <b>My Documents</b>
           </template>
 
           <template #action="table">
@@ -69,28 +69,61 @@
     </v-row>
   </v-container>
 </template>
+
 <script>
 import lister from "@/components/easyTable/Index.vue";
-import emergencyContactForm from "@/components/Emergencycontact/Emergencycontactform.vue";
-import { getEmergencyContactList } from "@/services/emergencycontact/emergencycontactService.js";
 export default {
-  name: "emergencycontacts",
+  name: "documents",
   data() {
     return {
-      tableData: [],
-      canAddEmergencyContact: true,
-      showAddForm: false,
+      tableData: [
+          {
+            id: 1,
+            name: "srinivas",
+            address: "kamalanagar",
+            phone: "2147483647",
+            email: "s@g.com",
+            relationship: "Adult Child",
+            notes: "t",
+          },
+          {
+            id: 2,
+            name: "srinivas",
+            address: "kamalanagar",
+            phone: "8197279373",
+            email: "s@gmail.com",
+            relationship: "Aunt",
+            notes: "contact notes",
+          },
+          {
+            id: 3,
+            name: "test",
+            address: "",
+            phone: "8197279373",
+            email: "t@gmail.com",
+            relationship: "Brother",
+            notes: "",
+          },
+          {
+            id: 4,
+            name: "Hari",
+            address: "",
+            phone: "8197279373",
+            email: "",
+            relationship: "Friend",
+            notes: "",
+          },
+          {
+            id: 5,
+            name: "Raja",
+            address: "",
+            phone: "8197279373",
+            email: "",
+            relationship: "Child",
+            notes: "",
+          },
+        ],
     };
-  },
-  props: {
-    personId: {
-      type: [Number, String],
-      default: window.personId,
-    },
-  },
-  components: {
-    lister,
-    emergencyContactForm,
   },
   computed: {
     columns() {
@@ -104,29 +137,11 @@ export default {
       ];
     },
   },
-  methods: {
-    showEmergencyContactForm() {
-      this.showAddForm = true;
-      this.$vuetify.goTo("#emergencyContactForm");
-    },
-    getEmergencyContactList() {
-      getEmergencyContactList(this.personId)
-        .then((response) => {
-          this.tableData = response.data.list;
-          this.canAddEmergencyContact = response.data.canAddEmergencyContact;
-          this.showAddForm = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  },
-  created() {
-    this.getEmergencyContactList();
+  components: {
+    lister,
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 </style>

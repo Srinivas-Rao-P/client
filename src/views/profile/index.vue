@@ -1,12 +1,14 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <div class=""><b>Profile</b></div>
-    </v-col>
-    <v-col cols="12">
-      <profile :personId="personId" />
-    </v-col>
-  </v-row>
+  <v-container fluid>
+    <v-row>
+      <v-col cols="12">
+        <div class=""><b>Profile</b></div>
+      </v-col>
+      <v-col cols="12">
+        <profile :personId="personId" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 import profile from "@/components/Profile.vue";

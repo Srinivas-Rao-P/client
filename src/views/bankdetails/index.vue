@@ -1,36 +1,37 @@
 <template>
-  <v-row dense>
-    <v-col cols="12">
-      <lister
-        :columns="columns"
-        :data="tableData"
-        name="bankdetails"
-        primaryKey="id"
-        ref="lister"
-        :pagination="true"
-        :sort="true"
-        :search="true"
-      >
-        <template #listerTitle>
-          <b>Bank Details</b>
-        </template>
+  <v-container fluid>
+    <v-row>
+      <v-col cols="12">
+        <lister
+          :columns="columns"
+          :data="tableData"
+          name="bankdetails"
+          primaryKey="id"
+          ref="lister"
+          :pagination="true"
+          :sort="true"
+          :search="true"
+        >
+          <template #listerTitle>
+            <b>Bank Details</b>
+          </template>
 
-        <template #action="table">
-          <v-row dense justify="center">
-            <v-col cols="12" lg="auto">
-              <v-btn
-                icon
-                fab
-                x-small
-                dark
-                depressed
-                color="primary"
-                @click="table.toggle('edit')"
-              >
-                <v-icon dense dark>mdi-pencil</v-icon>
-              </v-btn>
-            </v-col>
-            <!-- <v-col cols="12" lg="auto">
+          <template #action="table">
+            <v-row dense justify="center">
+              <v-col cols="12" lg="auto">
+                <v-btn
+                  icon
+                  fab
+                  x-small
+                  dark
+                  depressed
+                  color="primary"
+                  @click="table.toggle('edit')"
+                >
+                  <v-icon dense dark>mdi-pencil</v-icon>
+                </v-btn>
+              </v-col>
+              <!-- <v-col cols="12" lg="auto">
               <v-btn
                 icon
                 fab
@@ -43,7 +44,7 @@
               >
                 <v-icon dense dark>mdi-close-circle-outline</v-icon>
               </v-btn> -->
-            <!-- <v-dialog v-model="deleteDialog" max-width="290">
+              <!-- <v-dialog v-model="deleteDialog" max-width="290">
                 <v-card>
                   <v-card-title class="text-h5">
                     Use Google's location service?
@@ -72,8 +73,8 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog> -->
-            <!-- </v-col> -->
-            <!-- <v-col cols="12" lg="auto">
+              <!-- </v-col> -->
+              <!-- <v-col cols="12" lg="auto">
               <v-btn
                 icon
                 fab
@@ -86,42 +87,43 @@
                 <v-icon dense dark>mdi-clock-outline</v-icon>
               </v-btn>
             </v-col> -->
-          </v-row>
-        </template>
+            </v-row>
+          </template>
 
-        <template #rowDetails="table">
+          <template #rowDetails="table">
+            <bankForm
+              :personId="personId"
+              :id="table.row.id"
+              mode="edit"
+              @done="getBankList(), table.toggle('edit')"
+              @cancel="table.toggle('edit')"
+            ></bankForm>
+          </template>
+        </lister>
+      </v-col>
+      <v-col cols="12" id="bankForm" v-if="canAddBank">
+        <v-btn
+          v-if="!showAddForm"
+          small
+          class=""
+          color="primary"
+          outlined
+          depressed
+          @click="showBankForm"
+        >
+          Add a bank
+        </v-btn>
+        <v-card outlined v-else>
           <bankForm
             :personId="personId"
-            :id="table.row.id"
-            mode="edit"
-            @done="getBankList(), table.toggle('edit')"
-            @cancel="table.toggle('edit')"
+            mode="add"
+            @done="getBankList"
+            @cancel="showAddForm = false"
           ></bankForm>
-        </template>
-      </lister>
-    </v-col>
-    <v-col cols="12" id="bankForm" v-if="canAddBank">
-      <v-btn
-        v-if="!showAddForm"
-        small
-        class=""
-        color="primary"
-        outlined
-        depressed
-        @click="showBankForm"
-      >
-        Add a bank
-      </v-btn>
-      <v-card outlined v-else>
-        <bankForm
-          :personId="personId"
-          mode="add"
-          @done="getBankList"
-          @cancel="showAddForm = false"
-        ></bankForm>
-      </v-card>
-    </v-col>
-  </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 import lister from "@/components/easyTable/Index.vue";

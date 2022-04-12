@@ -17,10 +17,9 @@ export default new Vuetify({
                 error: "e6a08c",
                 // honeydew: "#DBF5F0",
                 // honeydew: "#f8fcff",
-                // honeydew: "#F5F7FB",
+                honeydew: "#F5F7FB",
                 // honeydew: "#e6f5fa",
-                honeydew: "#F9F9F9",
-                // honeydew:"#F5F7FB",
+                // honeydew: "#F9F9F9",
                 // honeydew:"#FAFAFA",
             }
         },

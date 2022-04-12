@@ -10,6 +10,7 @@
         <v-row>
           <v-col cols="12" lg="6" md="6">
             <span>Name</span>
+            <span class="primary--text"> <b>*</b></span>
             <v-text-field
               v-model="emergencyContact.name"
               placeholder="Name"
@@ -41,6 +42,7 @@
           </v-col>
           <v-col cols="12" lg="6" md="6">
             <span>Phone</span>
+            <span class="primary--text"> <b>*</b></span>
             <v-text-field
               v-model="emergencyContact.phone"
               placeholder="Phone"
@@ -59,6 +61,7 @@
 
           <v-col cols="12" lg="6" md="6">
             <span>Relationship</span>
+            <span class="primary--text"> <b>*</b></span>
             <v-autocomplete
               :items="relationshipList"
               v-model="emergencyContact.relationshipid"
