@@ -76,7 +76,7 @@ const routes = [
         path: "/manageemployee",
         name: "manageemployee",
         props: true,
-        component: () => import("@/views/manageemployee/index"),
+        component: () => import("@/views/employee/manageemployee"),
         meta: {
             requiresAuth: true,
         }
