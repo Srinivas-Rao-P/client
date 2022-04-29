@@ -15,6 +15,7 @@ export default new Vuetify({
                 secondary: colors.grey.darken1,
                 accent: colors.shades.black,
                 error: "e6a08c",
+                white: "#ffffff",
                 // honeydew: "#DBF5F0",
                 // honeydew: "#f8fcff",
                 honeydew: "#F5F7FB",

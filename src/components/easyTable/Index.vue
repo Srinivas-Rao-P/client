@@ -95,7 +95,7 @@
         lg="auto"
         md="auto"
         align-self="center"
-        v-if="totalItems !== 0"
+        v-if="showTotalRecords && totalItems !== 0"
       >
         Total records: {{ totalItems }}
       </v-col>
@@ -156,6 +156,7 @@ export default {
     search: { type: Boolean, default: false },
     columnSelection: { type: Boolean, default: false }, // Shows a form which will help to toggle the columns
     saveUserPreference: { type: Boolean, default: false }, // Turn on/off the ability to store the
+    showTotalRecords: { type: Boolean, default: true }, // Turn on/off the ability to store the
   },
   data() {
     return {

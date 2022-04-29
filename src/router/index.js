@@ -51,7 +51,7 @@ const routes = [
     {
         path: "/mycontactinfo",
         name: "mycontactinfo",
-        component: () => import("@/components/Mycontactinfo"),
+        component: () => import("@/views/mycontactinfo/index"),
         meta: {
             requiresAuth: true,
         }
@@ -140,6 +140,15 @@ const routes = [
         name: "newhire",
         props: true,
         component: () => import("@/views/newhire/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/pendinghire",
+        name: "pendinghire",
+        props: true,
+        component: () => import("@/views/pendinghire/index"),
         meta: {
             requiresAuth: true,
         }
