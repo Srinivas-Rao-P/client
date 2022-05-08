@@ -5,7 +5,7 @@
         :columns="columns"
         :data="tableData"
         name="email"
-        primaryKey="id"
+        primaryKey="pernetcontactpid"
         ref="lister"
         :sort="true"
         :showTotalRecords="false"
@@ -37,7 +37,7 @@
 
 <script>
 import lister from "@/components/easyTable/Index.vue";
-
+import { getEmails } from "@/services/mycontactinfo/emailService.js";
 export default {
   name: "email",
   data() {
@@ -48,31 +48,34 @@ export default {
   components: {
     lister,
   },
+  props: {
+    personId: {
+      default: window.personId,
+    },
+  },
   computed: {
     columns() {
       return [
         { title: "Email", key: "email" },
-        { title: "Type", key: "type" },
-        { title: "Privacy", key: "privacy" },
+        { title: "Type", key: "netcontacttype" },
+        { title: "Privacy", key: "privacycode" },
         { title: "Actions", key: "action", type: "custom", fixed: "right" },
       ];
     },
   },
   created() {
-    this.tableData = [
-      {
-        id: 30,
-        email: "Bharatha@email.com",
-        type: "Personal",
-        privacy: "Restricted",
-      },
-      {
-        id: 31,
-        email: "Bharatha@gmail.com",
-        type: "Work",
-        privacy: "Unrestricted",
-      },
-    ];
+    this.getEmails();
+  },
+  methods: {
+    getEmails() {
+      getEmails(this.personId)
+        .then((response) => {
+          this.tableData = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

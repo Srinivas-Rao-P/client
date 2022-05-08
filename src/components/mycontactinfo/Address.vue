@@ -5,7 +5,7 @@
         :columns="columns"
         :data="tableData"
         name="address"
-        primaryKey="id"
+        primaryKey="peraddpid"
         ref="lister"
         :sort="true"
         :showTotalRecords="false"
@@ -37,7 +37,7 @@
 
 <script>
 import lister from "@/components/easyTable/Index.vue";
-
+import { getAddress } from "@/services/mycontactinfo/addressService.js";
 export default {
   name: "address",
   data() {
@@ -48,11 +48,16 @@ export default {
   components: {
     lister,
   },
+  props: {
+    personId: {
+      default: window.personId,
+    },
+  },
   computed: {
     columns() {
       return [
         { title: "Address", key: "address" },
-        { title: "State", key: "state" },
+        { title: "State", key: "statecode" },
         { title: "City", key: "city" },
         { title: "Zipcode", key: "zipcode" },
         { title: "Type", key: "type" },
@@ -62,26 +67,18 @@ export default {
     },
   },
   created() {
-    this.tableData = [
-      {
-        id: 30,
-        address: "923 Payne Street",
-        state: "Karnataka",
-        city: "Bangalore",
-        zipcode: "47586",
-        type: "Work Location",
-        privacy: "Unrestricted",
-      },
-      {
-        id: 31,
-        address: "Kamalanagar",
-        state: "Karnataka",
-        city: "Bangalore",
-        zipcode: "560079",
-        type: "Home",
-        privacy: "Restricted",
-      },
-    ];
+    this.getAddress();
+  },
+  methods: {
+    getAddress() {
+      getAddress(this.personId)
+        .then((response) => {
+          this.tableData = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

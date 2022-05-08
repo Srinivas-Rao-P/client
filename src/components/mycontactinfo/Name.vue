@@ -5,7 +5,7 @@
         :columns="columns"
         :data="tableData"
         name="name"
-        primaryKey="id"
+        primaryKey="pernamespid"
         ref="lister"
         :sort="true"
         :showTotalRecords="false"
@@ -37,7 +37,7 @@
 
 <script>
 import lister from "@/components/easyTable/Index.vue";
-
+import { getNames } from "@/services/mycontactinfo/nameService.js";
 export default {
   name: "name",
   data() {
@@ -48,27 +48,36 @@ export default {
   components: {
     lister,
   },
+  props: {
+    personId: {
+      default: window.personId,
+    },
+  },
   computed: {
     columns() {
       return [
-        { title: "First Name", key: "firstname" },
-        { title: "Last Name", key: "lastname" },
-        { title: "Middle Name", key: "middlename" },
+        { title: "Title", key: "title" },
+        { title: "First Name", key: "fname" },
+        { title: "Middle Name", key: "mname" },
+        { title: "Last Name", key: "lname" },
         { title: "Type", key: "type" },
         { title: "Actions", key: "action", type: "custom", fixed: "right" },
       ];
     },
   },
   created() {
-    this.tableData = [
-      {
-        id: 30,
-        firstname: "Bharatha",
-        lastname: "H",
-        middlename: "R",
-        type: "Primary",
-      },
-    ];
+    this.getNames();
+  },
+  methods: {
+    getNames() {
+      getNames(this.personId)
+        .then((response) => {
+          this.tableData = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

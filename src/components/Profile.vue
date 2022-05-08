@@ -45,7 +45,7 @@
             <v-col cols="12">
               <div>
                 <!-- <v-icon>mdi-account</v-icon> -->
-                {{ profile.firstname }} {{ profile.lastname }}
+                {{ profile.name }}
               </div>
               <div>abcxyz00024</div>
               <div>work@gmail.com</div>
@@ -298,7 +298,7 @@
       </v-col>
 
       <v-col cols="12" lg="9" md="8">
-        <v-card class="pa-9">
+        <v-card class="pa-9 fill-height">
           <v-row>
             <v-col cols="12" lg="4" md="4">
               <span>First name</span>
@@ -310,8 +310,8 @@
                 dense
                 flat
                 outlined
-                v-model="profile.firstname"
-                :rules="firstnameRules"
+                v-model="profile.fname"
+                :rules="fnameRules"
                 autocomplete="nope"
               ></v-text-field>
             </v-col>
@@ -326,8 +326,22 @@
                 dense
                 flat
                 outlined
-                v-model="profile.lastname"
-                :rules="lastnameRules"
+                v-model="profile.lname"
+                :rules="lnameRules"
+                autocomplete="nope"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" lg="4" md="4">
+              <span>Middle Name</span>
+              <v-text-field
+                placeholder="Middle Name"
+                color="primary"
+                hide-details="auto"
+                dense
+                flat
+                outlined
+                v-model="profile.mname"
                 autocomplete="nope"
               ></v-text-field>
             </v-col>
@@ -343,34 +357,18 @@
                 dense
                 flat
                 outlined
-                v-model="profile.phone"
+                v-model="profile.phoneno"
                 autocomplete="nope"
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" lg="6" md="6">
-              <span>Work mail</span>
-              <v-text-field
-                placeholder="Work mail"
-                color="primary"
-                hide-details="auto"
-                disabled
-                dense
-                flat
-                outlined
-                v-model="profile.workmail"
-                autocomplete="nope"
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" lg="6" md="6">
+            <v-col cols="12" lg="8" md="8">
               <span>Email</span>
               <span class="primary--text"> <b>*</b></span>
               <v-text-field
                 placeholder="Email"
                 color="primary"
-                hide-details="auto"
-                disabled
+                hide-details="auto"                
                 dense
                 flat
                 outlined
@@ -409,7 +407,7 @@
                 dense
                 flat
                 outlined
-                v-model="profile.state"
+                v-model="profile.statecode"
                 :rules="stateRules"
                 autocomplete="nope"
               >
@@ -417,10 +415,10 @@
             </v-col>
 
             <v-col cols="12" lg="4" md="4">
-              <span>city</span>
+              <span>city</span>{{ profile.city }}
               <span class="primary--text"> <b>*</b></span>
               <v-autocomplete
-                :disabled="!profile.state"
+                :disabled="!profile.statecode"
                 :items="cityList"
                 item-text="name"
                 item-value="isoCode"
@@ -473,17 +471,7 @@
             <v-col cols="12" lg="4" md="4">
               <span>Date of birth</span>
               <span class="primary--text"> <b>*</b></span>
-              <v-text-field
-                placeholder="Date of birth"
-                color="primary"
-                hide-details="auto"
-                dense
-                flat
-                outlined
-                v-model="profile.dateofbirth"
-                :rules="dateofbirthRules"
-                autocomplete="nope"
-              ></v-text-field>
+              <datepicker :date="profile.dob" @input="setDob"></datepicker>
             </v-col>
 
             <v-col cols="12" lg="4" md="4">
@@ -506,13 +494,6 @@
               </v-select>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-btn color="primary" @click="saveProfile" :loading="loading">
-                Update Information
-              </v-btn>
-            </v-col>
-          </v-row>
         </v-card>
       </v-col>
     </v-row>
@@ -524,6 +505,7 @@
 import { State, City } from "country-state-city";
 import { postcodeValidator } from "postcode-validator";
 import { getProfile, saveProfile } from "@/services/profile/profileService";
+import datepicker from "@/components/datePicker/index.vue";
 export default {
   name: "profile",
   data() {
@@ -550,10 +532,9 @@ export default {
         (v) => !!v || "Please enter a valid email",
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
-      lastnameRules: [(v) => !!v || "Lastname is required"],
-      firstnameRules: [(v) => !!v || "Firstname is required"],
+      lnameRules: [(v) => !!v || "Lastname is required"],
+      fnameRules: [(v) => !!v || "Firstname is required"],
       nationalityRules: [(v) => !!v || "Nationality is required"],
-      dateofbirthRules: [(v) => !!v || "Date of birth is required"],
       genderRules: [(v) => !!v || "Gender is required"],
 
       countryCode: "IN",
@@ -579,30 +560,24 @@ export default {
       this.getProfile();
     },
   },
+  components: {
+    datepicker,
+  },
   computed: {
     stateList() {
       return State.getStatesOfCountry(this.countryCode);
     },
     cityList() {
-      return City.getCitiesOfState(this.countryCode, this.profile.state);
+      return City.getCitiesOfState(this.countryCode, this.profile.statecode);
     },
     validateZipcode() {
       return postcodeValidator(this.profile.zipcode, this.countryCode);
     },
-    // decoded() {
-    //   return VueJwtDecode.decode(this.candidateToken);
-    // },
-    // email() {
-    //   return this.decoded.email;
-    // },
-    // firstname() {
-    //   return this.decoded.firstname;
-    // },
-    // lastname() {
-    //   return this.decoded.lastname;
-    // },
   },
   methods: {
+    setDob(date) {
+      this.profile.dob = date;
+    },
     onProfileImageSelect(e) {
       // const file = e.target.files[0];
       // this.profile.imageurl = URL.createObjectURL(file);

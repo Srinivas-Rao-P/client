@@ -5,7 +5,7 @@
         :columns="columns"
         :data="tableData"
         name="phone"
-        primaryKey="id"
+        primaryKey="percontactpid"
         ref="lister"
         :sort="true"
         :showTotalRecords="false"
@@ -37,7 +37,7 @@
 
 <script>
 import lister from "@/components/easyTable/Index.vue";
-
+import { getPhones } from "@/services/mycontactinfo/phoneService.js";
 export default {
   name: "phone",
   data() {
@@ -48,10 +48,16 @@ export default {
   components: {
     lister,
   },
+   props: {
+    personId: {
+      default: window.personId,
+    },
+  },
   computed: {
     columns() {
       return [
-        { title: "Phone", key: "phone" },
+        { title: "Country code", key: "countrycode" },
+        { title: "Phone", key: "phoneno" },
         { title: "Type", key: "type" },
         { title: "Privacy", key: "privacy" },
         { title: "Actions", key: "action", type: "custom", fixed: "right" },
@@ -59,14 +65,18 @@ export default {
     },
   },
   created() {
-    this.tableData = [
-      {
-        id: 30,
-        phone: "8197279373",
-        type: "Work",
-        privacy: "Unrestricted",
-      },
-    ];
+    this.getPhones();
+  },
+  methods: {
+    getPhones() {
+      getPhones(this.personId)
+        .then((response) => {
+          this.tableData = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
