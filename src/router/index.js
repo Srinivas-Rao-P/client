@@ -21,7 +21,14 @@ const routes = [
             requiresVisitor: true,
         }
     },
-
+    {
+        path: "/mytask",
+        name: "taskindex",
+        component: () => import("@/views/task/Index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
     {
         path: "/resetPassword/:token?",
         name: "resetpassword",
@@ -91,10 +98,28 @@ const routes = [
         }
     },
     {
+        path: "/companytimeoff",
+        name: "companytimeoff",
+        props: true,
+        component: () => import("@/views/mytime/companytimeoff"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
         path: "/timeoffrequest",
         name: "timeoffrequest",
         props: true,
         component: () => import("@/views/mytime/timeoffrequest"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/requesttimeoff",
+        name: "requesttimeoff",
+        props: true,
+        component: () => import("@/views/mytime/requesttimeoff"),
         meta: {
             requiresAuth: true,
         }

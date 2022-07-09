@@ -468,7 +468,7 @@ export default {
     customizeColumn(method, value) {
       if (method === "date") {
         return new Date(value).toLocaleString("en-IN", {
-          timeZone: "UTC",
+          timeZone: "IST",
           day: "2-digit",
           month: "2-digit",
           year: "numeric",

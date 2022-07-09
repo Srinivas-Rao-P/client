@@ -75,7 +75,7 @@ export default {
     showMenuHeader() {
       if (
         this.$route.name &&
-        !["login", "register", "candidatelogin"].includes(this.$route.name)
+        !["login","resetpassword", "register", "candidatelogin"].includes(this.$route.name)
       ) {
         return true;
       } else {
