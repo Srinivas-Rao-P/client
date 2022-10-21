@@ -1,158 +1,65 @@
 <template>
   <v-form ref="form" lazy-validation @submit.prevent="saveBank" class="pa-4 pa-md-10 pa-lg-12">
-    <v-row justify="center">
-      <v-col cols="12" lg="8" md="8">
+    <v-row>
+      <v-col cols="12" lg="8" md="9" offset-lg="1" offset-md="1">
         <v-row>
           <v-col cols="12" lg="6" md="6">
-            <span>Account holder name</span>
-            <v-text-field
-              v-model="bankData.accountholdername"
-              placeholder="Account holder name"
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-              clearable
-            ></v-text-field>
+            <span>Account Holder Name</span>
+            <v-text-field v-model="bankData.accountholdername" placeholder="Account Holder Name" required outlined solo
+              dense flat hide-details="auto" autocomplete="nope" clearable></v-text-field>
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
             <span>Account Number</span>
-            <v-text-field
-              v-model="bankData.accountnumber"
-              placeholder="Account Number"
-              :rules="accountNumberRules"
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-              clearable
-            ></v-text-field>
+            <v-text-field v-model="bankData.accountnumber" placeholder="Account Number" :rules="accountNumberRules"
+              required outlined solo dense flat hide-details="auto" autocomplete="nope" clearable></v-text-field>
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
             <span>Account Type</span>
-            <v-autocomplete
-              :items="bankaccounttypes"
-              v-model="bankData.accounttypeid"
-              placeholder="Account Type"
-              :rules="accountTypeRules"
-              :disabled="isEditMode"
-              clearable
-              hide-details="auto"
-              autocomplete="nope"
-              item-text="type"
-              item-value="id"
-              required
-              outlined
-              solo
-              dense
-              flat
-            ></v-autocomplete>
+            <v-autocomplete :items="bankaccounttypes" v-model="bankData.accounttypeid" placeholder="Account Type"
+              :rules="accountTypeRules" :disabled="isEditMode" hide-details="auto" autocomplete="nope" item-text="type"
+              item-value="id" required outlined solo dense flat></v-autocomplete>
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
             <span>IFSC</span>
-            <v-text-field
-              v-model="bankData.ifsccode"
-              placeholder="IFSC"
-              :rules="ifscRules"
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-              clearable
-              @input="bankData.ifsccode && getBranchFromIfsc()"
-            ></v-text-field>
+            <v-text-field v-model="bankData.ifsccode" placeholder="IFSC" :rules="ifscRules" required outlined solo dense
+              flat hide-details="auto" autocomplete="nope" clearable @input="bankData.ifsccode && getBranchFromIfsc()">
+            </v-text-field>
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
-            <span>Bank name</span>
-            <v-text-field
-              v-model="bankData.bankname"
-              disabled
-              placeholder="Bank Name"
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-            ></v-text-field>
+            <span>Bank Name</span>
+            <v-text-field v-model="bankData.bankname" readonly placeholder="Bank Name" required outlined solo dense flat
+              hide-details="auto" autocomplete="nope"></v-text-field>
           </v-col>
 
           <v-col cols="12" lg="6" md="6">
             <span>Branch</span>
-            <v-text-field
-              v-model="bankData.bankbranch"
-              placeholder="Branch"
-              disabled
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-            ></v-text-field>
+            <v-text-field v-model="bankData.bankbranch" placeholder="Branch" readonly required outlined solo dense flat
+              hide-details="auto" autocomplete="nope"></v-text-field>
           </v-col>
 
           <v-col cols="12">
             <span>Bank Address</span>
-            <v-textarea
-              v-model="bankData.bankaddress"
-              placeholder="Bank Address"
-              disabled
-              required
-              outlined
-              solo
-              dense
-              flat
-              hide-details="auto"
-              autocomplete="nope"
-              rows="2"
-              auto-grow
-            ></v-textarea>
+            <v-textarea v-model="bankData.bankaddress" placeholder="Bank Address" readonly required outlined solo dense
+              flat hide-details="auto" autocomplete="nope" rows="2" auto-grow></v-textarea>
           </v-col>
-        </v-row>
-
-        <v-row>
+        
           <v-col cols="12">
-            <v-row>
-              <v-col cols="auto">
-                <v-btn type="submit" color="primary" depressed dark dense small>
-                  Save
-                </v-btn>
-              </v-col>
-              <v-col cols="auto">
-                <v-btn
-                  color="primary"
-                  depressed
-                  outlined
-                  dark
-                  dense
-                  small
-                  text
-                  @click="cancel()"
-                >
-                  cancel
-                </v-btn>
-              </v-col>
-            </v-row>
+            <v-btn type="submit" color="primary" depressed dark dense small>
+              Save
+            </v-btn>
+            <v-btn color="primary" depressed outlined dark dense small text @click="cancel()">
+              cancel
+            </v-btn>
           </v-col>
+
         </v-row>
       </v-col>
     </v-row>
+   
   </v-form>
 </template>
 <script>
@@ -176,12 +83,12 @@ export default {
         bankbranch: "",
         bankaddress: "",
       },
-      accountNumberRules: [(v) => !!v || "Please enter a Account number"],
+      accountNumberRules: [(v) => !!v || "Please enter a Account Number"],
       ifscRules: [
-        (v) => !!v || "Please enter a Ifsc code",
-        (v) => (!!v && ifsc.validate(v)) || "Invalid Ifsc code",
+        (v) => !!v || "Please enter a Ifsc Code",
+        (v) => (!!v && ifsc.validate(v)) || "Invalid Ifsc Code",
       ],
-      accountTypeRules: [(v) => !!v || "Please select a Account type"],
+      accountTypeRules: [(v) => !!v || "Please select a Account Type"],
       bankaccounttypes: [],
     };
   },
@@ -291,4 +198,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 </style>

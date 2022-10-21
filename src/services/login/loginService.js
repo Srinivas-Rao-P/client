@@ -13,6 +13,24 @@ export const candidateLogin = (email, token, candidateId) => {
         candidateId: candidateId
     });
 }
+export const generateOtp = (username) => {
+    return authService.post("/auth/generateOtp", {
+        username: username.toLowerCase()
+    });
+}
+export const verifyOtp = (username, otp) => {
+    return authService.post("/auth/verifyOtp", {
+        username: username,
+        otp: otp
+    });
+}
+export const resetPassword = (username, password, otp) => {
+    return authService.post("/auth/resetPassword", {
+        username: username,
+        password: password,
+        otp: otp
+    });
+}
 export const logout = (token) => {
     return authService.post("/auth/logout", {
         token: token,

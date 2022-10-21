@@ -12,9 +12,10 @@ export default new Vuetify({
             light: {
                 // primary: "#01627F",
                 primary: "#195F73",
-                secondary: colors.grey.darken1,
+                secondary: "#008b8b",
                 accent: colors.shades.black,
                 error: "e6a08c",
+                white: "#ffffff",
                 // honeydew: "#DBF5F0",
                 // honeydew: "#f8fcff",
                 honeydew: "#F5F7FB",

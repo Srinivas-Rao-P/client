@@ -32,35 +32,16 @@
             <v-icon color="primary">mdi-account</v-icon>
           </v-btn>
         </template>
-        <template #fullname="table">
+        <template #name="table">
           <router-link
             class="ml-2"
             :to="{
               name: 'navbar',
               params: { personId: table.row.id },
             }"
-            >{{ table.row.firstname }} {{ table.row.lastname }}
+            >{{ table.row.name }}
           </router-link>
         </template>
-        <template #action="table">
-          <v-row dense justify="center">
-            <v-col cols="12" lg="auto">
-              <v-btn
-                icon
-                fab
-                x-small
-                dark
-                depressed
-                color="primary"
-                @click="table.toggle('edit')"
-              >
-                <v-icon dense dark>mdi-pencil</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </template>
-
-        <template #rowDetails="table"> {{ table.row.id }} </template>
       </lister>
     </v-col>
   </v-row>
@@ -82,11 +63,10 @@ export default {
     columns() {
       return [
         { title: "Profile", key: "profile", type: "custom" },
-        { title: "Full name", key: "fullname", type: "custom", align: "left" },
+        { title: "Full name", key: "name", type: "custom", align: "left" },
         { title: "Designation", key: "designation" },
         { title: "Hiredate", key: "hiredate", type: "date" },
-        { title: "Status", key: "status" },
-        { title: "Action", key: "action", type: "custom" },
+        { title: "Manager", key: "manager" },
       ];
     },
   },

@@ -10,7 +10,7 @@
           </v-col> -->
 
           <v-col
-            cols="7"
+            cols="12"
             lg="4"
             md="4"
             v-if="data !== null && search"
@@ -26,18 +26,19 @@
               solo
               dense
               outlined
+              clearable
+              @click:clear="searchText = ''"
             ></v-text-field>
           </v-col>
-          <v-col
+          <!-- <v-col
             cols="5"
             lg="2"
             md="2"
-            v-if="pagination && totalItems > 5"
             align-self="center"
-          >
+          > -->
             <!--Items Per Page-->
 
-            <v-select
+            <!-- <v-select
               v-model="userPreference.pageSize"
               :items="itemOption"
               item-text="text"
@@ -47,8 +48,8 @@
               solo
               dense
               outlined
-            ></v-select>
-          </v-col>
+            ></v-select> -->
+          <!-- </v-col> -->
         </v-row>
       </v-col>
     </v-row>
@@ -68,6 +69,7 @@
       :border-x="false"
       :border-y="false"
       :fixed-header="true"
+      max-height="auto"
     >
     </ve-table>
     <!-- Easy Table End -->
@@ -95,7 +97,7 @@
         lg="auto"
         md="auto"
         align-self="center"
-        v-if="totalItems !== 0"
+        v-if="showTotalRecords && totalItems !== 0"
       >
         Total records: {{ totalItems }}
       </v-col>
@@ -156,6 +158,7 @@ export default {
     search: { type: Boolean, default: false },
     columnSelection: { type: Boolean, default: false }, // Shows a form which will help to toggle the columns
     saveUserPreference: { type: Boolean, default: false }, // Turn on/off the ability to store the
+    showTotalRecords: { type: Boolean, default: true }, // Turn on/off the ability to store the
   },
   data() {
     return {
@@ -467,7 +470,7 @@ export default {
     customizeColumn(method, value) {
       if (method === "date") {
         return new Date(value).toLocaleString("en-IN", {
-          timeZone: "UTC",
+          timeZone: "IST",
           day: "2-digit",
           month: "2-digit",
           year: "numeric",

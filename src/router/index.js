@@ -21,7 +21,14 @@ const routes = [
             requiresVisitor: true,
         }
     },
-
+    {
+        path: "/mytask",
+        name: "taskindex",
+        component: () => import("@/views/task/Index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
     {
         path: "/resetPassword/:token?",
         name: "resetpassword",
@@ -51,7 +58,43 @@ const routes = [
     {
         path: "/mycontactinfo",
         name: "mycontactinfo",
-        component: () => import("@/components/Mycontactinfo"),
+        component: () => import("@/views/mycontactinfo/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/phone/:personId?",
+        name: "phoneindex",
+        props: true,
+        component: () => import("@/views/phone/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/name/:personId?",
+        name: "nameindex",
+        props: true,
+        component: () => import("@/views/name/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/email/:personId?",
+        name: "emailindex",
+        props: true,
+        component: () => import("@/views/email/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/address/:personId?",
+        name: "addressindex",
+        props: true,
+        component: () => import("@/views/address/index"),
         meta: {
             requiresAuth: true,
         }
@@ -91,10 +134,28 @@ const routes = [
         }
     },
     {
+        path: "/companytimeoff",
+        name: "companytimeoff",
+        props: true,
+        component: () => import("@/views/mytime/companytimeoff"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
         path: "/timeoffrequest",
         name: "timeoffrequest",
         props: true,
         component: () => import("@/views/mytime/timeoffrequest"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/requesttimeoff",
+        name: "requesttimeoff",
+        props: true,
+        component: () => import("@/views/mytime/requesttimeoff"),
         meta: {
             requiresAuth: true,
         }
@@ -140,6 +201,15 @@ const routes = [
         name: "newhire",
         props: true,
         component: () => import("@/views/newhire/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/pendinghire",
+        name: "pendinghire",
+        props: true,
+        component: () => import("@/views/pendinghire/index"),
         meta: {
             requiresAuth: true,
         }

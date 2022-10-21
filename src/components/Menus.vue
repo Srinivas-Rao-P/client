@@ -19,35 +19,10 @@
         </v-list>
       </v-card> -->
 
-      <v-list>
-        <v-list-item
-          dense
-          :ripple="false"
-          class="no-background-hover float-right"
-        >
-          <!-- <v-text-field
-          class="pa-0"
-            v-if="!collapse"
-            placeholder="search"
-            clearable
-            dense
-            hide-details
-            solo
-            flat
-            outlined
-            rounded
-            color="primary"
-            autocomplete="nope"
-          >
-          </v-text-field> -->
-          <v-btn
-            depressed
-            color="primary"
-            small
-            plain
-            icon
-            @click="collapseMenu()"
-          >
+      <v-list expand>
+      
+        <v-list-item dense :ripple="false" class="no-background-hover float-right">
+          <v-btn depressed color="primary" small plain icon @click="collapseMenu()" v-if="!isMobile">
             <v-icon dense color="primary" v-if="collapse">
               mdi-chevron-double-right
             </v-icon>
@@ -55,31 +30,55 @@
               mdi-chevron-double-left
             </v-icon>
           </v-btn>
+
+          <v-btn depressed color="primary" small plain icon v-else @click="closeDrawer()">
+            <v-icon dense color="primary">
+              mdi-close
+            </v-icon>
+
+          </v-btn>
         </v-list-item>
-        <template v-for="menuitem in menus">
+
+        <template v-if="!collapse">
+
+          <!-- <v-list-item>
+            <v-list-item-avatar>
+              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            </v-list-item-avatar>
+          </v-list-item> -->
+
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title class="text-h6 text-capitalize">
+                {{ personInfo.name }}
+              </v-list-item-title>
+              <v-list-item-subtitle>{{personInfo.email}}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item class="mt-4 mb-8">          
+              <v-text-field class="pa-0" placeholder="Search" clearable dense hide-details solo flat outlined small
+                color="primary" autocomplete="nope" v-model="search" @click:clear="search = ''">
+              </v-text-field>            
+          </v-list-item>
+
+        </template>
+     
+        <template v-for="menuitem in filteredMenu">
           <template v-if="!collapse">
-            <v-list-group
-              v-if="menuitem.submenu.length > 0"
-              :key="menuitem.id"
-              :value="false"
-              color="primary"
-              :ripple="false"
-            >
+            <v-list-group v-if="menuitem.submenu.length > 0" :key="menuitem.id" :value="search && search.toString() !== ''" color="primary"
+              :ripple="false">
               <template v-slot:activator>
-                <v-list-item-title class="no-background-hover">{{
-                  menuitem.name
-                }}</v-list-item-title>
+                <v-list-item-title class="no-background-hover">
+                  {{ menuitem.name }}
+                </v-list-item-title>
               </template>
-              <v-list-item
-                v-for="submenuitem in menuitem.submenu"
-                :key="submenuitem.id"
-                link
-                exact
-                exact-active-class="active"
-                :ripple="false"
-                class="no-background-hover"
-                :to="{ name: submenuitem.link }"
-              >
+              <v-list-item v-for="submenuitem in menuitem.submenu" :key="submenuitem.id" link exact
+                exact-active-class="active" :ripple="false" class="no-background-hover"
+                :to="{ name: submenuitem.link }">
                 <v-list-item-icon class="mr-2">
                   <v-icon dense color="primary">
                     {{ submenuitem.icon }}
@@ -94,16 +93,8 @@
               </v-list-item>
             </v-list-group>
 
-            <v-list-item
-              v-else
-              :key="menuitem.id"
-              link
-              exact
-              exact-active-class="active"
-              :ripple="false"
-              class="no-background-hover"
-              :to="{ name: menuitem.link }"
-            >
+            <v-list-item v-else :key="menuitem.id" link exact exact-active-class="active" :ripple="false"
+              class="no-background-hover" :to="{ name: menuitem.link }">
               <v-list-item-content>
                 <v-list-item-title>
                   {{ menuitem.name }}
@@ -113,23 +104,9 @@
           </template>
 
           <template v-else>
-            <v-list-item
-              v-if="menuitem.submenu.length == 0"
-              :key="menuitem.name"
-              link
-              exact
-              dense
-              exact-active-class="active"
-              :ripple="false"
-              class="no-background-hover"
-              :to="{ name: menuitem.link }"
-            >
-              <v-tooltip
-                right
-                color="primary"
-                v-if="collapse"
-                :open-delay="300"
-              >
+            <v-list-item v-if="menuitem.submenu.length == 0" :key="menuitem.name" link exact dense
+              exact-active-class="active" :ripple="false" class="no-background-hover" :to="{ name: menuitem.link }">
+              <v-tooltip right color="primary" v-if="collapse" :open-delay="1000" transition="fade">
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon v-bind="attrs" v-on="on" dense color="primary">
                     {{ menuitem.icon }}
@@ -139,24 +116,9 @@
               </v-tooltip>
             </v-list-item>
 
-            <v-list-item
-              v-else
-              v-for="submenuitem in menuitem.submenu"
-              :key="submenuitem.id"
-              link
-              exact
-              dense
-              exact-active-class="active"
-              :ripple="false"
-              class="no-background-hover"
-              :to="{ name: submenuitem.link }"
-            >
-              <v-tooltip
-                right
-                color="primary"
-                v-if="collapse"
-                :open-delay="300"
-              >
+            <v-list-item v-else v-for="submenuitem in menuitem.submenu" :key="submenuitem.id" link exact dense
+              exact-active-class="active" :ripple="false" class="no-background-hover" :to="{ name: submenuitem.link }">
+              <v-tooltip right color="primary" v-if="collapse" :open-delay="1000" transition="fade">
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon v-bind="attrs" v-on="on" dense color="primary">
                     {{ submenuitem.icon }}
@@ -176,7 +138,7 @@
             :ripple="false"
             class="no-background-hover"
           >
-            <v-tooltip right color="primary" v-if="collapse" :open-delay="300">
+            <v-tooltip right color="primary" v-if="collapse" :open-delay="1000" transition="fade">
               <template v-slot:activator="{ on, attrs }">
                 <v-list-item-icon
                   @mouseover="tooltipText = menuitem.name"
@@ -227,7 +189,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import { getMenu } from "@/services/menu/menuService.js";
+import { getPersonInfo } from "@/services/person/personService.js";
 export default {
   name: "menus",
   data() {
@@ -235,30 +200,74 @@ export default {
       menus: [],
       collapse: JSON.parse(localStorage.getItem("collapse")),
       tooltipText: "",
+      search: "",
+      personInfo: {},
     };
   },
   created() {
     this.getMenu();
+    this.getPersonInfo();
+  },
+  watch: {
+    isMobile: {
+      handler(newValue) {
+        if (newValue && this.collapse)
+          this.collapseMenu();
+      }
+    }
   },
   methods: {
+    ...mapActions(["saveMainMenu"]),
     collapseMenu() {
       this.collapse = !this.collapse;
+      this.search = "";
       localStorage.setItem("collapse", this.collapse);
       this.$emit("collapse");
+    },
+    closeDrawer() {
+      this.$emit("closeDrawer");
     },
     getMenu() {
       getMenu()
         .then((response) => {
           this.menus = response.data;
-          this.menus.map((e) => {
-            e.submenu = JSON.parse(e.submenu);
-          });
+          
+          this.saveMainMenu(this.menus);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getPersonInfo() {
+      getPersonInfo(window.personId)
+        .then((response) => {
+          this.personInfo = response.data;
         })
         .catch((error) => {
           console.log(error);
         });
     },
   },
+  computed: {
+    ...mapGetters(["isMobile","getMainMenu"]),
+    filteredMenu() {
+      if (!this.search?.length) {
+        return this.getMainMenu;
+      }
+      return this.getMainMenu.map((menu) => {
+        return this.search.toLowerCase().split(" ").every(v => menu.name.toLowerCase().includes(v))
+          ? menu : {
+            ...menu,
+            submenu: menu.submenu?.filter(subMenu => this.search.toLowerCase().split(" ").every(v => subMenu.name.toLowerCase().includes(v)))
+          }
+      }).filter((menu) => {
+        if (menu.submenu?.length)
+          return menu
+        else
+          return this.search.toLowerCase().split(" ").every(v => menu.name.toLowerCase().includes(v))
+      });
+    }
+  }
 };
 </script>
 <style scoped>

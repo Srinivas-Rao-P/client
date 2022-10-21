@@ -10,6 +10,9 @@ import VueJwtDecode from "vue-jwt-decode"
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
 
+import Donut from 'vue-css-donut-chart';
+import 'vue-css-donut-chart/dist/vcdonut.css';
+
 const options = {
 
   transition: "Vue-Toastification__fade",
@@ -40,6 +43,7 @@ const options = {
 
 }
 
+Vue.use(Donut);
 Vue.use(Toast, options);
 Vue.config.productionTip = false
 Vue.use(VueI18n);
