@@ -64,6 +64,42 @@ const routes = [
         }
     },
     {
+        path: "/phone/:personId?",
+        name: "phoneindex",
+        props: true,
+        component: () => import("@/views/phone/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/name/:personId?",
+        name: "nameindex",
+        props: true,
+        component: () => import("@/views/name/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/email/:personId?",
+        name: "emailindex",
+        props: true,
+        component: () => import("@/views/email/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: "/address/:personId?",
+        name: "addressindex",
+        props: true,
+        component: () => import("@/views/address/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
         path: "/managemenus",
         name: "managemenus",
         component: () => import("@/views/managemenus/index"),

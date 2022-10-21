@@ -11,7 +11,7 @@
           <v-row no-gutters>
             <v-col cols="12">
               <v-text-field type="text" v-model="username" :rules="[rules.nameRules]" label="Username/Email" required
-                outlined color="primary">
+                autofocus outlined color="primary">
               </v-text-field>
             </v-col>
             <v-col cols="12">

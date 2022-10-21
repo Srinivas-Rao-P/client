@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        <div>My Contact Info</div>
+        <div><b>My Contact Info</b></div>
       </v-col>
       <v-col cols="12">
         <v-expansion-panels
@@ -79,10 +79,10 @@
 </template>
 
 <script>
-import Name from "@/components/mycontactinfo/Name";
-import Address from "@/components/mycontactinfo/Address";
-import Email from "@/components/mycontactinfo/Email";
-import Phone from "@/components/mycontactinfo/Phone";
+import Name from "@/components/mycontactinfo/Name/index";
+import Address from "@/components/mycontactinfo/Address/index";
+import Email from "@/components/mycontactinfo/Email/index";
+import Phone from "@/components/mycontactinfo/Phone/index";
 
 export default {
   name: "mycontactinfo",

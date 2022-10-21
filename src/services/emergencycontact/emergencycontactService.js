@@ -1,7 +1,7 @@
 import resourcesServer from "@/services/config/resourcesServerConfig";
 
-export const getEmergencyContactList = (personId) => {
-    return resourcesServer.get(`/emergencycontact/getEmergencyContactList/${personId}`);
+export const getEmergencyContactList = (personId, showDeletedRecords) => {
+    return resourcesServer.get(`/emergencycontact/getEmergencyContactList/${personId}/${showDeletedRecords}`);
 }
 export const addEmergencyContact = (personId, data) => {
     return resourcesServer.post(`/emergencycontact/addEmergencyContact/${personId}`, data);

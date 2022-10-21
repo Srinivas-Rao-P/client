@@ -10,7 +10,7 @@
           </v-col> -->
 
           <v-col
-            cols="7"
+            cols="12"
             lg="4"
             md="4"
             v-if="data !== null && search"
@@ -26,18 +26,19 @@
               solo
               dense
               outlined
+              clearable
+              @click:clear="searchText = ''"
             ></v-text-field>
           </v-col>
-          <v-col
+          <!-- <v-col
             cols="5"
             lg="2"
             md="2"
-            v-if="pagination && totalItems > 5"
             align-self="center"
-          >
+          > -->
             <!--Items Per Page-->
 
-            <v-select
+            <!-- <v-select
               v-model="userPreference.pageSize"
               :items="itemOption"
               item-text="text"
@@ -47,8 +48,8 @@
               solo
               dense
               outlined
-            ></v-select>
-          </v-col>
+            ></v-select> -->
+          <!-- </v-col> -->
         </v-row>
       </v-col>
     </v-row>
@@ -68,6 +69,7 @@
       :border-x="false"
       :border-y="false"
       :fixed-header="true"
+      max-height="auto"
     >
     </ve-table>
     <!-- Easy Table End -->

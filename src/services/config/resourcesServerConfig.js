@@ -1,6 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
-import router from "@/router/index"
+import router from "@/router/index";
+import store from "@/store";
 import { logout } from "@/services/login/loginService";
 // import router from "../../router";
 // import VueJwtDecode from "vue-jwt-decode";
@@ -53,7 +54,14 @@ import { logout } from "@/services/login/loginService";
 
 //console.log("apiUrl Request : " +process.env.VUE_APP_API_URL);
 //console.log("window.token on request: " +window.token);
+let requestedEndPoints = []
 
+function completedEndPoints(url){
+    requestedEndPoints = requestedEndPoints.filter((e)=> e !== url)
+    if(requestedEndPoints.length === 0){
+        store.commit("setSpinner", false);
+    }
+}
 
 const ResourcesServer = axios.create({
     baseURL: window.API_URL
@@ -64,6 +72,7 @@ const vm = new Vue();
 
 ResourcesServer.interceptors.response.use(
     response => {
+        completedEndPoints(response.config.url);
         if (response.status === 200 || response.status === 201) {
             return Promise.resolve(response);
         } else {
@@ -71,6 +80,7 @@ ResourcesServer.interceptors.response.use(
         }
     },
     error => {
+        completedEndPoints(error.response.config.url)
         if (error.response.status) {
             switch (error.response.status) {
                 case 400:
@@ -111,6 +121,10 @@ ResourcesServer.interceptors.response.use(
 );
 
 ResourcesServer.interceptors.request.use(function (config) {
+    
+    requestedEndPoints.push(config.url)
+    store.commit("setSpinner", true);
+
     if (window.token) {
         config.headers["Authorization"] = "Bearer " + window.token;
         config.headers["Access-Control-Allow-Origin"] = "*";

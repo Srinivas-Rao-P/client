@@ -24,9 +24,8 @@
       <v-menu
         transition="slide-y-transition"
         bottom
-        rounded="b-xl"
         offset-y
-        z-index="0"
+        z-index="10"
         right
       >
         <template v-slot:activator="{ attrs, on }">
@@ -52,7 +51,7 @@
             link
             :ripple="false"
             class="no-background-hover"
-            :to="{ name: 'profile' }"
+            :to="{ name: 'profileindex' }"
           >
             <v-list-item-title>Profile</v-list-item-title>
           </v-list-item>

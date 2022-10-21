@@ -1,7 +1,7 @@
 import resourcesServer from "@/services/config/resourcesServerConfig";
 
-export const getBankList = (personId) => {
-    return resourcesServer.get(`/bank/getBankList/${personId}`);
+export const getBankList = (personId, showDeletedRecords) => {
+    return resourcesServer.get(`/bank/getBankList/${personId}/${showDeletedRecords}`);
 }
 export const addBank = (personId, data) => {
     return resourcesServer.post(`/bank/addBank/${personId}`, data);

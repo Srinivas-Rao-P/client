@@ -1,5 +1,6 @@
 <template>
-  <v-menu
+  <v-menu 
+    :disabled="readonly"
     ref="dateModel"
     v-model="dateModel"
     :close-on-content-click="false"
@@ -53,6 +54,10 @@ export default {
   props: {
     date: {
       type: String,
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
   },
   watch: {
