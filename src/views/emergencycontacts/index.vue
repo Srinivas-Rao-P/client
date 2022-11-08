@@ -2,7 +2,6 @@
   <v-container fluid>
     <v-row no-gutters>
       <v-col cols="12">
-        <div class="text-h6"><b></b></div>
         <lister :columns="listerColumns" :data="tableData" name="mycommunications" primaryKey="id" ref="lister"
           :pagination="true" :sort="true" :search="true">
           <template #listerTitle>
@@ -10,7 +9,7 @@
               <v-col> <b>Emergency Contacts</b></v-col>
               <v-col class="text-right">
                 <v-btn color="primary" small @click="showDeletedRecords = !showDeletedRecords">
-                  {{showDeletedRecords ? "Hide Deleted" : "Show Deleted"}}
+                  {{ showDeletedRecords ? "Hide Deleted" : "Show Deleted" }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -56,10 +55,9 @@
           </template>
         </lister>
       </v-col>
-      
-      <v-col cols="12" id="emergencyContactForm" v-if="canAddEmergencyContact" class="mt-5">      
-        <v-btn v-if="!showAddForm" small color="primary" outlined depressed
-          @click="showEmergencyContactForm()">
+
+      <v-col cols="12" id="emergencyContactForm" v-if="canAddEmergencyContact" class="mt-5">
+        <v-btn v-if="!showAddForm" small color="primary" outlined depressed @click="showEmergencyContactForm()">
           Add Emergency Contact
         </v-btn>
         <v-card outlined v-else>

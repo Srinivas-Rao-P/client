@@ -226,7 +226,9 @@
                 color="primary"
                 show-arrows
                 grow
-                center-active
+                center-active 
+                centered
+                
               >
                 <v-tab> Compensation </v-tab>
                 <v-tab> Organization </v-tab>

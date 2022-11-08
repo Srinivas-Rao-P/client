@@ -79,13 +79,13 @@
       v-if="data !== null && totalItems === 0"
       class="text-center mt-3 bg-white p-4 rounded"
     >
-      <b>noData</b>
+      <b>No Data</b>
     </div>
     <div
       v-else-if="data === null"
       class="text-center mt-3 bg-white p-4 rounded"
     >
-      <b>loading</b>
+      <b>Loading...</b>
     </div>
     <!-- Informative End -->
 
@@ -153,12 +153,13 @@ export default {
 
     // Following are the feature with their usual meaning
     pagination: { tye: Boolean, default: false },
+    pageSize: { tye: Number, default: 5 },
     sort: { type: Boolean, default: false },
-    multipleExpand: { type: Boolean, default: false }, // Allow the user to expand multiple row at same time
+    multipleExpand: { type: Boolean, default: false }, 
     search: { type: Boolean, default: false },
-    columnSelection: { type: Boolean, default: false }, // Shows a form which will help to toggle the columns
-    saveUserPreference: { type: Boolean, default: false }, // Turn on/off the ability to store the
-    showTotalRecords: { type: Boolean, default: true }, // Turn on/off the ability to store the
+    columnSelection: { type: Boolean, default: false }, 
+    saveUserPreference: { type: Boolean, default: false }, 
+    showTotalRecords: { type: Boolean, default: true },
   },
   data() {
     return {
@@ -495,7 +496,7 @@ export default {
   },
   created() {
     // populate the default preference
-    this.userPreference.pageSize = 5;
+    this.userPreference.pageSize = this.pageSize;
     this.userPreference.shownColumn = [];
     this.columns.map((el) => {
       this.userPreference.shownColumn.push(el.key);

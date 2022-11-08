@@ -7,7 +7,7 @@
           <v-row dense justify="center">
             <v-col cols="12" lg="auto">              
 
-              <v-btn v-if="showDeletedRecords" icon fab x-small depressed disabled color="primary">
+              <v-btn v-if="showDeletedRecords || table.row.type.toLowerCase() == 'work'" icon fab x-small depressed disabled color="primary">
                   <v-icon dense>mdi-pencil</v-icon>
                 </v-btn>
 
@@ -15,7 +15,7 @@
                   <v-icon dense>mdi-pencil</v-icon>
                 </v-btn>
 
-              <v-btn v-if="showDeletedRecords" icon fab x-small depressed disabled color="error">
+              <v-btn v-if="showDeletedRecords || table.row.type.toLowerCase() == 'work'" icon fab x-small depressed disabled color="error">
                 <v-icon dense>mdi-delete</v-icon>
               </v-btn>
 

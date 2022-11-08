@@ -116,6 +116,14 @@ const routes = [
         }
     },
     {
+        path: "/leavemanagement",
+        name: "leavemanagement",
+        component: () => import("@/views/leavemanagement/index"),
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
         path: "/manageemployee",
         name: "manageemployee",
         props: true,

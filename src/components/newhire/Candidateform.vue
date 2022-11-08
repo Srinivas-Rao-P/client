@@ -28,9 +28,12 @@
                     <v-col cols="12" lg="3" md="3">
                       <span>Title </span>
                       <span class="primary--text"> <b>*</b></span>
-                      <v-text-field type="text" autofocus v-model="candidateData.title" placeholder="Mr / Ms"
-                        autocomplete="nope" aria-label="name title" :rules="titleRules" required outlined solo dense
-                        flat hide-details="auto"></v-text-field>
+
+                        <v-autocomplete :items="titleList" item-text="item"
+                        item-value="value" placeholder="Mr / Ms" color="primary" hide-details="auto" dense flat solo
+                        outlined v-model="candidateData.title" :rules="titleRules" autocomplete="nope">
+                      </v-autocomplete>
+
                     </v-col>
 
                     <!-- First name -->
@@ -139,9 +142,10 @@
                     <v-col cols="12" lg="3" md="3">
                       <span> Email type </span>
                       <span class="primary--text"> <b>*</b></span>
-                      <v-autocomplete :items="netcontacttypeList" v-model="candidateData.netcontacttype" :rules="emailtypeRules"
-                        autocomplete="nope" placeholder="Email type" aria-label="email type" item-text="item"
-                        item-value="value" required outlined solo dense flat hide-details="auto"></v-autocomplete>
+                      <v-autocomplete :items="netcontacttypeList" v-model="candidateData.netcontacttype"
+                        :rules="emailtypeRules" autocomplete="nope" placeholder="Email type" aria-label="email type"
+                        item-text="item" item-value="value" required outlined solo dense flat hide-details="auto">
+                      </v-autocomplete>
                     </v-col>
 
                     <!-- Email -->
@@ -361,7 +365,7 @@ export default {
         welcomemail: true,
         countrycode: "IN",
       },
-      titleRules: [(v) => !!v || "Please enter a title"],
+      titleRules: [(v) => !!v || "Please select a title"],
       nameRules: [(v) => !!v || "Please enter a name"],
       lastnameRules: [(v) => !!v || "Please enter a last name"],
       addressRules: [(v) => !!v || "Please enter a valid address"],
@@ -384,6 +388,12 @@ export default {
       zipcodeRules: [
         (v) => !!v || "Zipcode is required",
         (v) => (!!v && this.validateZipcode) || "Zipcode not valid",
+      ],
+      titleList: [
+        { item: "Dr", value: "dr" },
+        { item: "Mr", value: "mr" },
+        { item: "Mrs", value: "mrs" },
+        { item: "Ms", value: "ms" },
       ],
       genderList: [
         { item: "Male", value: "m" },

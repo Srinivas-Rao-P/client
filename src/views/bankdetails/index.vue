@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row>
+    <v-row no-gutters>
       <v-col cols="12">
         <lister :columns="listerColumns" :data="tableData" name="bankdetails" primaryKey="id" ref="lister" :pagination="true"
           :sort="true" :search="true">
@@ -120,7 +120,7 @@
           </template>
         </lister>
       </v-col>
-      <v-col cols="12" id="bankForm" v-if="canAddBank">
+      <v-col cols="12" id="bankForm" v-if="canAddBank" class="mt-5">
         <v-btn v-if="!showAddForm" small class="" color="primary" outlined depressed @click="showBankForm">
           Add a bank
         </v-btn>

@@ -191,8 +191,8 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
-import { getMenu } from "@/services/menu/menuService.js";
 import { getPersonInfo } from "@/services/person/personService.js";
+import { getMenu } from "@/services/menu/menuService.js";
 export default {
   name: "menus",
   data() {

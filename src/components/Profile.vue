@@ -32,12 +32,12 @@
                 <!-- <v-icon>mdi-account</v-icon> -->
                 {{ profile.name }}
               </div>
-              <div>abcxyz00024</div>
-              <div>work@gmail.com</div>
-              <div>Reporting manager</div>
+              <!-- <div>abcxyz00024</div> -->
+              <div>{{profile.email}}</div>
+              <div>{{profile.designation}}</div>
               <div>
                 <!-- <v-icon>mdi-map-marker</v-icon> -->
-                Remote
+                <!-- Remote -->
               </div>
             </v-col>
           </v-row>
