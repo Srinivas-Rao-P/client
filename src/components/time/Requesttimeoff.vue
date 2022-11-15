@@ -1,8 +1,8 @@
 <template>
     <v-form ref="requesttimeoffofrm" lazy-validation @submit.prevent="saveBank">
-        <v-row dense>
+        <v-row>
             <v-col cols="12">
-                <v-sheet class="pa-4">
+                <v-sheet class="py-10">
                     <v-row justify="center">
                         <v-col cols="12" lg="10" md="10">
                             <span>Type</span>
@@ -51,12 +51,12 @@
                         <v-col cols="12" lg="10" md="10">
                             <v-row>
                                 <v-col cols="auto">
-                                    <v-btn type="submit" color="primary" depressed dark dense small>
+                                    <v-btn type="submit" color="primary" depressed dark>
                                         Request Time Off
                                     </v-btn>
                                 </v-col>
                                 <v-col cols="auto">
-                                    <v-btn color="primary" depressed outlined dark dense small text @click="cancel()">
+                                    <v-btn color="primary" depressed outlined dark text @click="cancel()">
                                         cancel
                                     </v-btn>
                                 </v-col>

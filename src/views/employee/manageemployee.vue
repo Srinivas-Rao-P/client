@@ -65,7 +65,7 @@ export default {
         { title: "Profile", key: "profile", type: "custom" },
         { title: "Full name", key: "name", type: "custom", align: "left" },
         { title: "Designation", key: "designation" },
-        { title: "Hiredate", key: "hiredate", type: "date" },
+        { title: "Hire date", key: "hiredate", type: "date" },
         { title: "Manager", key: "manager" },
       ];
     },
